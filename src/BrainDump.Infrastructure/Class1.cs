@@ -1,4 +1,4 @@
-﻿namespace BrainDump.Infrastructure;
+namespace BrainDump.Infrastructure;
 
 public class Class1
 {

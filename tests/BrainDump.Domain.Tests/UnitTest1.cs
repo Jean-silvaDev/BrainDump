@@ -1,4 +1,4 @@
-﻿namespace BrainDump.Domain.Tests;
+namespace BrainDump.Domain.Tests;
 
 public class UnitTest1
 {

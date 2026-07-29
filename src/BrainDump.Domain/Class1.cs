@@ -1,4 +1,4 @@
-﻿namespace BrainDump.Domain;
+namespace BrainDump.Domain;
 
 public class Class1
 {
