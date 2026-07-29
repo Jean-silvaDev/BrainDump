@@ -31,6 +31,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Install Workloads
+        run: dotnet workload restore
+
       - name: Restore Dependencies
         run: dotnet restore BrainDump.slnx
 
