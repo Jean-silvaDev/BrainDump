@@ -22,6 +22,11 @@ Substituir a automação antiga por um ecossistema modular de GitHub Actions div
    - **Ambiente**: `ubuntu-latest`.
    - **Ações**: Validação de formatação de código baseada no `.editorconfig` (`dotnet format`) e auditoria de vulnerabilidades em dependências NuGet (`dotnet list package --vulnerable`).
 
+4. **`codeql-analysis.yml` (Análise Estática com GitHub CodeQL)**:
+   - **Gatilhos**: Pushes e PRs para `main` e `develop`, além de varredura semanal agendada (`cron`).
+   - **Ambiente**: `ubuntu-latest`.
+   - **Ações**: Análise estática avançada de segurança da informação (SAST) em C# utilizando as regras `security-extended` e `security-and-quality` da engine do CodeQL.
+
 ## Padrão de Branching Recomendado
 - `main`: Branch de código estável/produção.
 - `develop`: Branch de integração contínua.
