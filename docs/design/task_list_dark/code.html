@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>BrainDump - Task List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-secondary": "#ffffff",
+                    "outline": "#787586",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "surface-tint": "#5b45d6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#fcf8ff",
+                    "surface-container-high": "#ebe6f3",
+                    "secondary-container": "#6ee1fd",
+                    "background": "#fcf8ff",
+                    "primary": "#5842d3",
+                    "surface-dim": "#ddd8e4",
+                    "primary-fixed": "#e5deff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary-container": "#725ded",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary": "#894d00",
+                    "surface": "#fcf8ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001f26",
+                    "on-surface": "#1c1a23",
+                    "inverse-on-surface": "#f4effb",
+                    "tertiary-container": "#ad6200",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container": "#f1ecf8",
+                    "secondary-fixed-dim": "#62d5f1",
+                    "on-primary-fixed": "#180064",
+                    "inverse-primary": "#c8bfff",
+                    "outline-variant": "#c9c4d7",
+                    "on-secondary-container": "#006374",
+                    "on-background": "#1c1a23",
+                    "on-tertiary-fixed-variant": "#6b3b00",
+                    "on-primary-fixed-variant": "#4326bd",
+                    "primary-fixed-dim": "#c8bfff",
+                    "secondary-fixed": "#acedff",
+                    "inverse-surface": "#312f38",
+                    "tertiary-fixed-dim": "#ffb875",
+                    "surface-container-highest": "#e5e0ed",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f7f1fe",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#474554"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin_mobile": "16px",
+                    "gutter": "24px",
+                    "margin_desktop": "40px",
+                    "container_max_width": "1280px",
+                    "base_unit": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #1c1a23; /* fallback for on-surface background */
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(49, 47, 56, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #787586;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:checked {
+            background: #5842d3;
+            border-color: #5842d3;
+        }
+
+        .custom-checkbox:checked::after {
+            content: 'check';
+            font-family: 'Material Symbols Outlined';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+        }
+
+        .priority-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .fab-gradient {
+            background: linear-gradient(135deg, #5842d3 0%, #00687a 100%);
+        }
+    </style>
+</head>
+<body class="bg-inverse-surface text-on-surface-variant min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Anchor -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 text-primary dark:text-primary-fixed-dim font-headline-md text-headline-md w-full sticky top-0 backdrop-blur-lg border-b border-white/20 dark:border-outline-variant/20 shadow-sm flex items-center justify-between px-margin_mobile md:px-margin_desktop h-16 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer active:scale-95" data-icon="menu">menu</span>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim !text-headline-md">BrainDump</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 cursor-pointer active:scale-95">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a modern tech professional with a clean, cinematic aesthetic. The person is Alex Chen, featuring soft lighting against a deep indigo backdrop with subtle glassmorphic reflections. The mood is sophisticated and focused, matching a premium digital productivity application's high-end visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-dmcoKIxaz021f4nfe--RJVkF81RxoCDdEk5eJSmuf1S5ED_hZdaKBbiYoYXyndi-_bmvYfAV3cFtg2Vep9iw5aCF3Y3EpmHmuQSE1nTQX2LeXj_qr2faLnKAuJUdFYkddfIahbsCxmmNztiyDK5XW6EN6EeZeCabEJkGt-H3KIMK2riY0Sg-gbq9HcnxkRLuRYZzI-F89OCiMTR_cnRa_jKRrwDoZJV1SCr_0Vkxkj-iWaEjLMNJ"/>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pb-32 px-margin_mobile pt-6 max-w-container_max_width mx-auto">
+<!-- Animated Background Element -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-40">
+
+</div>
+<!-- Header & Counter -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-primary-fixed-dim">My Tasks</h2>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Focus on what matters today.</p>
+</div>
+<div class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-lg shadow-primary/20">
+<span class="font-bold">12</span>
+<span class="opacity-80">Pending</span>
+</div>
+</div>
+<!-- Horizontal Filter Chips -->
+<div class="flex gap-3 overflow-x-auto hide-scrollbar mb-8 -mx-margin_mobile px-margin_mobile">
+<button class="flex-none px-6 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-lg shadow-primary/30">All</button>
+<button class="flex-none px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/30 transition-colors">Work</button>
+<button class="flex-none px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/30 transition-colors">Personal</button>
+<button class="flex-none px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/30 transition-colors">Ideas</button>
+<button class="flex-none px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/30 transition-colors">Archive</button>
+</div>
+<!-- Task List -->
+<div class="flex flex-col gap-3">
+<!-- Task Item 1 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Design System Audit</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Project: BrainDump UI</p>
+</div>
+<div class="priority-dot bg-error" title="High Priority"></div>
+</div>
+<!-- Task Item 2 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Client Call Re: Strategy</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">14:00 • Personal</p>
+</div>
+<div class="priority-dot bg-tertiary-container" title="Medium Priority"></div>
+</div>
+<!-- Task Item 3 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Weekly Grocery Run</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Shopping List</p>
+</div>
+<div class="priority-dot bg-secondary" title="Low Priority"></div>
+</div>
+<!-- Task Item 4 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Submit Expense Report</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Deadline Today</p>
+</div>
+<div class="priority-dot bg-error" title="High Priority"></div>
+</div>
+<!-- Task Item 5 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Refactor API Handlers</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Development</p>
+</div>
+<div class="priority-dot bg-tertiary-container" title="Medium Priority"></div>
+</div>
+<!-- Task Item 6 -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 active:scale-[0.98] cursor-pointer">
+<input class="custom-checkbox" type="checkbox"/>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-on-surface">Evening Meditation</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Wellness</p>
+</div>
+<div class="priority-dot bg-secondary" title="Low Priority"></div>
+</div>
+</div>
+<!-- Completed Toggle -->
+<div class="mt-12 flex items-center justify-between glass-panel p-4 rounded-xl border-dashed">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="task_alt">task_alt</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Completed (5)</span>
+</div>
+<span class="material-symbols-outlined cursor-pointer text-on-surface-variant" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-28 right-6 w-16 h-16 rounded-2xl fab-gradient shadow-2xl shadow-primary/40 flex items-center justify-center text-on-primary active:scale-90 transition-transform z-40 group">
+<span class="material-symbols-outlined text-[32px] group-hover:scale-110 transition-transform" data-icon="mic" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<!-- Bottom Navigation Shell -->
+<nav class="bg-surface/80 dark:bg-surface-container-low/80 text-primary dark:text-primary-fixed-dim font-label-md text-label-md fixed bottom-0 w-full z-50 backdrop-blur-lg rounded-t-xl border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] flex justify-around items-center h-20 pb-safe px-2">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="inbox">inbox</span>
+<span>Inbox</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="checklist" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span class="font-bold">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span>Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profile</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for checkboxes
+        document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const parent = this.closest('.glass-panel');
+                if(this.checked) {
+                    parent.style.opacity = '0.5';
+                    parent.style.transform = 'scale(0.98)';
+                } else {
+                    parent.style.opacity = '1';
+                    parent.style.transform = 'scale(1)';
+                }
+            });
+        });
+
+        // Toggle completed section animation
+        const completedToggle = document.querySelector('.mt-12');
+        let isOpen = false;
+        completedToggle.addEventListener('click', () => {
+            isOpen = !isOpen;
+            const arrow = completedToggle.querySelector('[data-icon="keyboard_arrow_down"]');
+            arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            arrow.style.transition = 'transform 0.3s ease';
+        });
+    </script>
+</body></html>

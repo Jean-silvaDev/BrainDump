@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - My Tasks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#464555",
+                    "inverse-surface": "#e4e1ee",
+                    "inverse-primary": "#4c42e9",
+                    "inverse-on-surface": "#302f39",
+                    "secondary-fixed": "#90f1ff",
+                    "on-surface": "#e4e1ee",
+                    "on-secondary-fixed": "#001f23",
+                    "outline": "#918fa1",
+                    "on-tertiary": "#542100",
+                    "on-tertiary-container": "#fffaf9",
+                    "surface-container-lowest": "#0e0d16",
+                    "tertiary-fixed-dim": "#ffb68f",
+                    "on-secondary": "#00363c",
+                    "on-background": "#e4e1ee",
+                    "surface-container": "#1f1f28",
+                    "tertiary-container": "#be5400",
+                    "secondary-fixed-dim": "#54d8e8",
+                    "tertiary-fixed": "#ffdbca",
+                    "on-tertiary-fixed": "#331100",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-container-highest": "#35343e",
+                    "on-secondary-container": "#003b42",
+                    "primary": "#c3c0ff",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#e2dfff",
+                    "background": "#13121c",
+                    "secondary": "#54d8e8",
+                    "surface-bright": "#393842",
+                    "tertiary": "#ffb68f",
+                    "on-surface-variant": "#c7c4d8",
+                    "on-primary-fixed": "#0f0069",
+                    "on-tertiary-fixed-variant": "#773200",
+                    "on-secondary-fixed-variant": "#004f56",
+                    "on-error": "#690005",
+                    "primary-container": "#635bff",
+                    "surface-container-low": "#1b1b24",
+                    "surface-dim": "#13121c",
+                    "on-primary-container": "#fefaff",
+                    "secondary-container": "#02aebe",
+                    "surface-variant": "#35343e",
+                    "surface-container-high": "#2a2933",
+                    "surface-tint": "#c3c0ff",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#321ed2",
+                    "surface": "#13121c",
+                    "error-container": "#93000a",
+                    "on-primary": "#1d00a5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "margin-mobile": "20px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "margin-desktop": "64px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "body-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-sm": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #13121c;
+            color: #e4e1ee;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(31, 31, 40, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mask-scroll {
+            -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        }
+
+        .checkbox-custom:checked + .checkbox-visual {
+            background-color: #c3c0ff;
+            border-color: #c3c0ff;
+        }
+
+        .checkbox-custom:checked + .checkbox-visual::after {
+            content: 'check';
+            font-family: 'Material Symbols Outlined';
+            font-size: 14px;
+            color: #1d00a5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes pulse-indigo {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(195, 192, 255, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(195, 192, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(195, 192, 255, 0); }
+        }
+
+        .fab-active {
+            animation: pulse-indigo 2s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A cinematic close-up portrait of a professional woman with sharp features, wearing futuristic minimalist eyewear. The lighting is moody and cool-toned with soft indigo backlighting, matching a high-tech minimalist dark mode aesthetic. The background is a blurred high-end studio space with subtle bokeh effects." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDO7_H_HM9leFBQFpn5t4n6ih55GbYhm0slI4s-e-w0mBf1QsNSmT6FuRSOCjEaVnfTvI87kmv0g3dqeeXvhoRWnN4shNJHdUpH5O3iHliu5SOrYbX9gvG2tOgvVq719Nd_9m0UPN_rmDTR-N6tNnsDpfyJryjhlQExUz4iCYHqLt1uMmu0E-m31-pD-3CWSV7mJn_hyiwwW9ROiz3jDoTza8UvZC_tS0e7C54EY2EZIThh7cxyFOz"/>
+</div>
+<h1 class="font-display text-display text-primary dark:text-primary tracking-tight text-[20px] leading-none">BrainDump</h1>
+</div>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="pt-20 px-margin-mobile max-w-2xl mx-auto">
+<!-- Headline -->
+<section class="mb-lg">
+<div class="flex items-baseline gap-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">My Tasks</h2>
+<span class="font-label-md text-label-md text-primary bg-primary-container/20 px-2 py-0.5 rounded-full">12</span>
+</div>
+</section>
+<!-- Filter Bar -->
+<section class="mb-lg -mx-margin-mobile px-margin-mobile overflow-x-auto no-scrollbar mask-scroll flex gap-sm py-2">
+<button class="flex-shrink-0 px-md py-sm rounded-full bg-primary text-on-primary font-label-md text-label-md transition-all">All</button>
+<button class="flex-shrink-0 px-md py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">Work</button>
+<button class="flex-shrink-0 px-md py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">Personal</button>
+<button class="flex-shrink-0 px-md py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">Shopping</button>
+<button class="flex-shrink-0 px-md py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                High Priority
+            </button>
+</section>
+<!-- Task List -->
+<section class="space-y-md">
+<!-- Task Item 1 -->
+<div class="glass-card p-md rounded-xl flex items-start gap-md group">
+<div class="relative flex items-center justify-center pt-1">
+<input class="checkbox-custom absolute opacity-0 w-6 h-6 cursor-pointer" type="checkbox"/>
+<div class="checkbox-visual w-6 h-6 rounded-md border-2 border-outline-variant transition-all"></div>
+</div>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg text-on-surface leading-tight">Draft presentation for Q3 strategy</h3>
+<span class="w-2 h-2 rounded-full bg-error mt-2"></span>
+</div>
+<div class="flex items-center gap-sm flex-wrap">
+<span class="px-2 py-0.5 rounded-md bg-secondary-container/10 text-secondary font-label-sm text-label-sm">Work</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">Today, 4:00 PM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Item 2 -->
+<div class="glass-card p-md rounded-xl flex items-start gap-md group">
+<div class="relative flex items-center justify-center pt-1">
+<input class="checkbox-custom absolute opacity-0 w-6 h-6 cursor-pointer" type="checkbox"/>
+<div class="checkbox-visual w-6 h-6 rounded-md border-2 border-outline-variant transition-all"></div>
+</div>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg text-on-surface leading-tight">Buy noise-canceling headphones</h3>
+<span class="w-2 h-2 rounded-full bg-secondary mt-2"></span>
+</div>
+<div class="flex items-center gap-sm flex-wrap">
+<span class="px-2 py-0.5 rounded-md bg-tertiary-container/10 text-tertiary font-label-sm text-label-sm">Shopping</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="event">event</span>
+<span class="font-label-sm text-label-sm">Friday</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Item 3 -->
+<div class="glass-card p-md rounded-xl flex items-start gap-md group">
+<div class="relative flex items-center justify-center pt-1">
+<input class="checkbox-custom absolute opacity-0 w-6 h-6 cursor-pointer" type="checkbox"/>
+<div class="checkbox-visual w-6 h-6 rounded-md border-2 border-outline-variant transition-all"></div>
+</div>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg text-on-surface leading-tight">Book flight to Tokyo</h3>
+<span class="w-2 h-2 rounded-full bg-primary mt-2"></span>
+</div>
+<div class="flex items-center gap-sm flex-wrap">
+<span class="px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Personal</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+<span class="font-label-sm text-label-sm">Expedia</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Item 4 -->
+<div class="glass-card p-md rounded-xl flex items-start gap-md group">
+<div class="relative flex items-center justify-center pt-1">
+<input class="checkbox-custom absolute opacity-0 w-6 h-6 cursor-pointer" type="checkbox"/>
+<div class="checkbox-visual w-6 h-6 rounded-md border-2 border-outline-variant transition-all"></div>
+</div>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-body-lg text-on-surface leading-tight">Sync with engineering team</h3>
+<span class="w-2 h-2 rounded-full bg-error mt-2"></span>
+</div>
+<div class="flex items-center gap-sm flex-wrap">
+<span class="px-2 py-0.5 rounded-md bg-secondary-container/10 text-secondary font-label-sm text-label-sm">Work</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="video_call">video_call</span>
+<span class="font-label-sm text-label-sm">Tomorrow, 10:00 AM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Completed Section -->
+<section class="mt-lg">
+<button class="w-full flex items-center justify-between p-md glass-card rounded-xl hover:bg-surface-container transition-all" onclick="toggleCompleted()">
+<span class="font-label-md text-label-md text-on-surface-variant">Show completed (5)</span>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform" data-icon="expand_more" id="completedChevron">expand_more</span>
+</button>
+<div class="hidden mt-md space-y-sm opacity-60 grayscale-[0.5]" id="completedTasks">
+<!-- Example Completed Item -->
+<div class="p-md flex items-start gap-md">
+<div class="w-6 h-6 rounded-md bg-primary/20 border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="check">check</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface-variant line-through">Finish weekly report</h3>
+</div>
+<div class="p-md flex items-start gap-md">
+<div class="w-6 h-6 rounded-md bg-primary/20 border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="check">check</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface-variant line-through">Morning meditation</h3>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-margin-mobile w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center fab-active active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined text-[28px]" data-icon="mic" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inbox">inbox</span>
+<span class="font-label-sm text-label-sm">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary font-bold relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="checklist" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        function toggleCompleted() {
+            const list = document.getElementById('completedTasks');
+            const chevron = document.getElementById('completedChevron');
+            const isHidden = list.classList.contains('hidden');
+            
+            if (isHidden) {
+                list.classList.remove('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                list.classList.add('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Micro-interaction for tasks
+        document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const card = e.target.closest('.glass-card');
+                if (e.target.checked) {
+                    card.style.opacity = '0.5';
+                    card.style.transform = 'scale(0.98)';
+                } else {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body></html>

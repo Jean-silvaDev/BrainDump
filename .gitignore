@@ -1,0 +1,51 @@
+## Visual Studio & IDEs
+.vs/
+.vscode/
+.idea/
+*.user
+*.userosv
+*.suo
+*.userprefs
+*.sln.docstates
+*.DotSettings.user
+
+## Build & Output Directories
+[Bb]in/
+[Oo]bj/
+out/
+[Dd]ebug/
+[Rr]elease/
+publish/
+[Tt]est[Rr]esults/
+*.coverage
+*.coveragexml
+
+## .NET MAUI / Mobile Build Artifacts
+*.apk
+*.aab
+*.ipa
+*.app
+*.dSYM/
+
+## Segredos e Configurações Locais
+.env
+appsettings.Development.json
+appsettings.Local.json
+*.pem
+*.key
+*.pfx
+*.cer
+
+## Docker & Dados Locais
+sqlserver_data/
+
+## Arquivos do Sistema Operacional
+[Tt]humbs.db
+[Dd]esktop.ini
+.DS_Store
+*.stackdump
+
+## Temporary files & logs
+*.log
+*.tmp
+tmp/

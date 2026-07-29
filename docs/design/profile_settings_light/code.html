@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>BrainDump - Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-secondary": "#ffffff",
+                    "outline": "#787586",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "surface-tint": "#5b45d6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#fcf8ff",
+                    "surface-container-high": "#ebe6f3",
+                    "secondary-container": "#6ee1fd",
+                    "background": "#fcf8ff",
+                    "primary": "#5842d3",
+                    "surface-dim": "#ddd8e4",
+                    "primary-fixed": "#e5deff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary-container": "#725ded",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary": "#894d00",
+                    "surface": "#fcf8ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001f26",
+                    "on-surface": "#1c1a23",
+                    "inverse-on-surface": "#f4effb",
+                    "tertiary-container": "#ad6200",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container": "#f1ecf8",
+                    "secondary-fixed-dim": "#62d5f1",
+                    "on-primary-fixed": "#180064",
+                    "inverse-primary": "#c8bfff",
+                    "outline-variant": "#c9c4d7",
+                    "on-secondary-container": "#006374",
+                    "on-background": "#1c1a23",
+                    "on-tertiary-fixed-variant": "#6b3b00",
+                    "on-primary-fixed-variant": "#4326bd",
+                    "primary-fixed-dim": "#c8bfff",
+                    "secondary-fixed": "#acedff",
+                    "inverse-surface": "#312f38",
+                    "tertiary-fixed-dim": "#ffb875",
+                    "surface-container-highest": "#e5e0ed",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f7f1fe",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#474554"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin_mobile": "16px",
+                    "gutter": "24px",
+                    "margin_desktop": "40px",
+                    "container_max_width": "1280px",
+                    "base_unit": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(252, 248, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .toggle-switch {
+            width: 52px;
+            height: 32px;
+            background: #e5e0ed;
+            border-radius: 999px;
+            position: relative;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .toggle-switch.active {
+            background: #5842d3;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        .soft-shadow {
+            box-shadow: 0 8px 32px -4px rgba(88, 66, 211, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 backdrop-blur-lg bg-surface/80 shadow-sm border-b border-white/20 h-16 flex items-center justify-between px-margin_mobile md:px-margin_desktop z-50">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-primary/10 transition-colors cursor-pointer active:scale-95 rounded-full">menu</button>
+<h1 class="font-headline-md text-headline-md text-primary">Profile</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 cursor-pointer active:scale-95">
+<img class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a young adult with a friendly expression. The lighting is soft and high-key, emphasizing clean skin and bright eyes. The background is a minimalist, out-of-focus light purple gradient that matches the soft-tech indigo and teal aesthetic. The image is crisp, modern, and perfectly suited for a premium digital application's user profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEoxgg5E2oq7l2sivfJ4iP4B8agl6Wt2nm89Jk8R87L1jH-s0Yhx8I8z1kXKDINrhee5fByK5LJlbqcLTS92rU9a7GDHQsnSl9Ir6zusAotLUx7UcuT-DU9LOYtZbuYQ_UOmk5Ehct5G2e7k758jsDRbGV_UHtBCBcKkbpYIsHAnWRo-1cvmrL2CC6HFfRMuQlK7_VEAprbDVgAz5mZAES-MItS6jkuAsumMl3ltJ9kAOGGvcoCrSm"/>
+</div>
+</header>
+<main class="max-w-screen-md mx-auto p-margin_mobile md:p-margin_desktop pb-32">
+<!-- Profile Hero Section -->
+<section class="glass-panel p-6 rounded-3xl mb-gutter soft-shadow flex flex-col items-center text-center">
+<div class="relative group">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 mb-4 transition-transform group-hover:scale-105 duration-300">
+<img class="w-full h-full object-cover" data-alt="A detailed headshot of Alex Chen, a tech professional, in a bright and airy modern workspace. He is wearing a minimalist dark grey t-shirt. The lighting is natural and vibrant, casting soft shadows. The overall aesthetic is clean, professional, and tranquil, reflecting the 'Cognitive Flow' design system. High resolution digital photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFy9PxiTXkV-ngon1Ev0XisEkG00XBolgyxMOhpcPJ1AeNhLM6feFwEKlHM2Yi3fXS9uMHaN0uAfpPyR4qo9ztzKJWZx3V4Uv7DnBTXbKEadRIqDt3w9zKO__fxWK2G2-kgpuiqpEPoyJWitzB0Hpt1y3gvYhEetk_u-MPs8QfwD6TUNHthku7elMIlfOlDhoenrAD4PUTtj0M1EcWWfPLe1-cX09HjW-bAhiNzSYlCdW6uRSDAWRe"/>
+</div>
+<button class="absolute bottom-4 right-0 bg-primary text-white p-1.5 rounded-full shadow-lg border-2 border-white">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Alex Chen</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Deep Flow Mode Active • Premium Plan</p>
+<div class="flex gap-2 w-full justify-center">
+<span class="px-4 py-1 rounded-full bg-primary-container/20 text-on-primary-fixed-variant text-label-md font-label-md">Productivity Guru</span>
+<span class="px-4 py-1 rounded-full bg-secondary-container/20 text-on-secondary-container text-label-md font-label-md">Flow State</span>
+</div>
+</section>
+<!-- Settings Groups -->
+<div class="space-y-gutter">
+<!-- App Settings -->
+<div class="space-y-2">
+<h3 class="px-2 text-label-sm font-label-sm text-outline uppercase tracking-widest">Preferences</h3>
+<div class="glass-panel rounded-3xl overflow-hidden divide-y divide-white/20">
+<!-- Notification Toggle (ON) -->
+<div class="flex items-center justify-between p-5 hover:bg-surface-variant/30 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">Notifications</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Manage alert sounds and frequency</p>
+</div>
+</div>
+<div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+</div>
+<!-- Dark Mode Toggle (OFF) -->
+<div class="flex items-center justify-between p-5 hover:bg-surface-variant/30 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">Dark Mode</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Switch to dark interface theme</p>
+</div>
+</div>
+<div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+</div>
+</div>
+</div>
+<!-- Account Settings -->
+<div class="space-y-2">
+<h3 class="px-2 text-label-sm font-label-sm text-outline uppercase tracking-widest">Account</h3>
+<div class="glass-panel rounded-3xl overflow-hidden">
+<button class="w-full flex items-center justify-between p-5 hover:bg-surface-variant/30 transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-2xl bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Personal Information</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-5 hover:bg-surface-variant/30 transition-colors text-left border-t border-white/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-2xl bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">shield</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Security &amp; Privacy</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Stats / Gamification Card -->
+<div class="glass-panel p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-secondary/5 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Focus Journey</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">You've reached <span class="font-bold text-primary">Level 12</span> of Cognitive Flow.</p>
+<div class="w-full bg-surface-variant rounded-full h-3 mb-2 overflow-hidden">
+<div class="bg-gradient-to-r from-primary to-secondary h-full rounded-full transition-all duration-1000" style="width: 65%"></div>
+</div>
+<p class="text-label-sm font-label-sm text-outline text-right">450 / 700 Flow Points</p>
+</div>
+<!-- Abstract visual element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-primary/5 blur-3xl"></div>
+</div>
+<!-- Logout Button -->
+<button class="w-full py-4 px-6 rounded-2xl font-headline-md text-headline-md text-error hover:bg-error/5 transition-colors border border-error/20 active:scale-[0.98] transition-transform">
+                Log Out
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-lg bg-surface/80 border-t border-white/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] rounded-t-xl">
+<div class="flex justify-around items-center h-20 pb-safe px-2">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</div>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                // Logic can be added here for theme switching if needed
+                console.log('Toggle changed');
+            });
+        });
+
+        // Add scroll animation to panels
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-4');
+            observer.observe(panel);
+        });
+    </script>
+</body></html>

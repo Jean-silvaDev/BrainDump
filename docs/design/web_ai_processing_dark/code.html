@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Processing Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            background-color: #1c1a23; /* fallback for bg-on-background in dark mode */
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .orb-container {
+            perspective: 1000px;
+        }
+
+        .particle-orb {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(88, 66, 211, 0.4) 0%, rgba(110, 225, 253, 0.1) 70%, transparent 100%);
+            border-radius: 50%;
+            position: relative;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .floating-particle {
+            position: absolute;
+            background: #6ee1fd;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        /* Custom scrollbar for sidebar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(114, 93, 237, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary": "#00687a",
+                        "on-secondary": "#ffffff",
+                        "outline": "#787586",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#fffbff",
+                        "surface-tint": "#5b45d6",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "surface-bright": "#fcf8ff",
+                        "surface-container-high": "#ebe6f3",
+                        "secondary-container": "#6ee1fd",
+                        "background": "#1c1a23",
+                        "primary": "#5842d3",
+                        "surface-dim": "#ddd8e4",
+                        "primary-fixed": "#e5deff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#2d1600",
+                        "primary-container": "#725ded",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary": "#894d00",
+                        "surface": "#fcf8ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001f26",
+                        "on-surface": "#1c1a23",
+                        "inverse-on-surface": "#f4effb",
+                        "tertiary-container": "#ad6200",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container": "#f1ecf8",
+                        "secondary-fixed-dim": "#62d5f1",
+                        "on-primary-fixed": "#180064",
+                        "inverse-primary": "#c8bfff",
+                        "outline-variant": "#c9c4d7",
+                        "on-secondary-container": "#006374",
+                        "on-background": "#1c1a23",
+                        "on-tertiary-fixed-variant": "#6b3b00",
+                        "on-primary-fixed-variant": "#4326bd",
+                        "primary-fixed-dim": "#c8bfff",
+                        "secondary-fixed": "#acedff",
+                        "inverse-surface": "#312f38",
+                        "tertiary-fixed-dim": "#ffb875",
+                        "surface-container-highest": "#e5e0ed",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f7f1fe",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#474554"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin_mobile": "16px",
+                        "gutter": "24px",
+                        "margin_desktop": "40px",
+                        "container_max_width": "1280px",
+                        "base_unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Outfit"],
+                        "label-sm": ["Outfit"],
+                        "display": ["Outfit"],
+                        "label-md": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-on-background text-on-surface antialiased overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="w-full sticky top-0 backdrop-blur-lg border-b border-white/20 dark:border-outline-variant/20 shadow-sm flex items-center justify-between px-margin_mobile md:px-margin_desktop h-16 z-50 bg-surface/80 dark:bg-surface-dim/80">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim cursor-pointer active:scale-95">menu</span>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim text-2xl">BrainDump</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-4 py-1 rounded-full bg-primary/10 text-primary-fixed-dim">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-md text-label-md">Processing...</span>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary/20 overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young professional with short dark hair, wearing a sleek modern headset, smiling warmly. The lighting is dramatic and moody with a dark blue and violet studio backdrop, creating a premium high-tech atmosphere consistent with a cognitive flow app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIDMSECZCYQycwy1Wypg3ZWksEy71ouFqmxsmY2AgRoZN9Olsdzm-a1wRbjc4BMjvCzYg7yaBhKoGRj5jfjzA6xkFkrQqiDJBlnDC_JRZTnjkmrnTT5qO53QYwpEXkWcjjrFrESybxe9_Ed67ZKDrM2H2BwkFoNSOpYnckLu0xJeuEGLBKXMQAe6DhDQOfECtNWDq95HZi8BjkaZnbSDhBOuPVC2GaZXbnfKx-Epf0rDpM09XQdYPM"/>
+</div>
+</div>
+</header>
+<div class="flex h-[calc(100vh-64px)] overflow-hidden">
+<!-- Sidebar Drawer (NavigationDrawer Anchor) -->
+<aside class="hidden md:flex flex-col py-8 gap-2 h-full w-72 backdrop-blur-xl border-r border-white/20 dark:border-outline-variant/20 shadow-xl bg-surface/90 dark:bg-surface-container/90">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<h3 class="font-body-md text-body-md font-bold text-on-surface dark:text-white">Alex Chen</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Deep Flow Mode</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span>Inbox</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-r-full mr-4 transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span>Tasks</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span>Progress</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<div class="px-6 py-4 mt-auto">
+<div class="glass-panel p-4 rounded-2xl">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Daily Capacity</span>
+<span class="font-label-sm text-label-sm text-primary">82%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[82%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 relative flex flex-col items-center justify-center p-gutter overflow-hidden">
+<!-- Animated Background Shader (Ambient Flow) -->
+
+<!-- Processing Visualization -->
+<div class="relative z-10 flex flex-col items-center max-w-2xl w-full text-center">
+<!-- Particle Orb Container -->
+<div class="orb-container relative flex items-center justify-center mb-12">
+<div class="particle-orb flex items-center justify-center">
+<!-- Inner Glow -->
+<div class="absolute inset-4 rounded-full bg-gradient-to-tr from-primary to-secondary opacity-20 blur-2xl animate-spin-slow"></div>
+<div class="relative w-48 h-48 glass-panel rounded-full flex items-center justify-center shadow-[0_0_60px_-15px_rgba(88,66,211,0.5)]">
+<span class="material-symbols-outlined text-6xl text-white animate-pulse" style="font-variation-settings: 'wght' 200;">mic</span>
+</div>
+</div>
+<!-- Orbiting Particles JS Injection Target -->
+<div class="absolute inset-0 overflow-visible" id="particle-field"></div>
+</div>
+<div class="space-y-6">
+<h2 class="font-headline-lg text-headline-lg text-white tracking-tight">Transcribing your voice...</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto opacity-80">
+                        Our neural network is extracting key concepts and action items from your session.
+                    </p>
+<!-- Dynamic Transcription Preview -->
+<div class="glass-panel p-6 rounded-3xl w-full text-left max-w-lg mx-auto transform transition-all duration-500 hover:scale-[1.02]">
+<div class="flex gap-2 items-center mb-4">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-sm text-label-sm text-secondary-fixed">REAL-TIME FLOW</span>
+</div>
+<div class="space-y-3 opacity-60">
+<p class="font-body-md text-body-md text-white/90 italic leading-relaxed h-12 overflow-hidden" id="typed-text">
+                                "...need to coordinate with the engineering team for the next sprint cycle and finalize the glassmorphic designs..."
+                            </p>
+</div>
+</div>
+</div>
+<!-- Footer Status Indicators -->
+<div class="mt-16 grid grid-cols-3 gap-8 w-full max-w-md">
+<div class="flex flex-col items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Audio</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(88,66,211,0.6)] animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Parsing</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Summary</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<footer class="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-lg rounded-t-xl border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] bg-surface/80 dark:bg-surface-container-low/80 flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span>Inbox</span>
+</a>
+<div class="relative -top-6">
+<div class="w-14 h-14 bg-primary rounded-full shadow-lg flex items-center justify-center text-white active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">mic</span>
+</div>
+</div>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span>Progress</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+</footer>
+<script>
+        // Particle generation logic for the orb
+        const particleField = document.getElementById('particle-field');
+        const particleCount = 24;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'floating-particle';
+            
+            const size = Math.random() * 4 + 2;
+            const duration = Math.random() * 5 + 3;
+            const delay = Math.random() * 5;
+            const radius = 160; // Max radius from center
+            const angle = Math.random() * Math.PI * 2;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            
+            // Initial position
+            const startX = 160 + Math.cos(angle) * (radius * 0.5);
+            const startY = 160 + Math.sin(angle) * (radius * 0.5);
+            
+            particle.style.left = `${startX}px`;
+            particle.style.top = `${startY}px`;
+
+            // Animate using Web Animations API
+            particle.animate([
+                { transform: 'translate(0, 0) scale(1)', opacity: 0 },
+                { transform: `translate(${Math.cos(angle) * 80}px, ${Math.sin(angle) * 80}px) scale(1.5)`, opacity: 0.8, offset: 0.5 },
+                { transform: `translate(${Math.cos(angle) * 160}px, ${Math.sin(angle) * 160}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: duration * 1000,
+                delay: delay * 1000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            });
+
+            particleField.appendChild(particle);
+        }
+
+        // Simulating transcription text appearing
+        const typedText = document.getElementById('typed-text');
+        const phrases = [
+            "...integrating the new API endpoints with the dashboard data models...",
+            "...remember to schedule the retrospective meeting for Thursday afternoon...",
+            "...the visual tokens should reflect the cognitive flow principles clearly...",
+            "...brainstorming session on the dark mode color palette next week..."
+        ];
+        let currentPhrase = 0;
+
+        setInterval(() => {
+            typedText.style.opacity = '0';
+            setTimeout(() => {
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+                typedText.textContent = phrases[currentPhrase];
+                typedText.style.opacity = '0.6';
+            }, 800);
+        }, 4000);
+    </script>
+</body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Voice Capture Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .mic-glow {
+            box-shadow: 0 0 50px -10px rgba(88, 66, 211, 0.6);
+        }
+        .glass-panel {
+            background: rgba(49, 47, 56, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(201, 196, 215, 0.1);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "secondary": "#00687a",
+                      "on-secondary": "#ffffff",
+                      "outline": "#787586",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#fffbff",
+                      "surface-tint": "#5b45d6",
+                      "on-secondary-fixed-variant": "#004e5c",
+                      "surface-bright": "#fcf8ff",
+                      "surface-container-high": "#ebe6f3",
+                      "secondary-container": "#6ee1fd",
+                      "background": "#fcf8ff",
+                      "primary": "#5842d3",
+                      "surface-dim": "#ddd8e4",
+                      "primary-fixed": "#e5deff",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed": "#2d1600",
+                      "primary-container": "#725ded",
+                      "surface-variant": "#e5e0ed",
+                      "tertiary": "#894d00",
+                      "surface": "#fcf8ff",
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed": "#001f26",
+                      "on-surface": "#1c1a23",
+                      "inverse-on-surface": "#f4effb",
+                      "tertiary-container": "#ad6200",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-container": "#f1ecf8",
+                      "secondary-fixed-dim": "#62d5f1",
+                      "on-primary-fixed": "#180064",
+                      "inverse-primary": "#c8bfff",
+                      "outline-variant": "#c9c4d7",
+                      "on-secondary-container": "#006374",
+                      "on-background": "#1c1a23",
+                      "on-tertiary-fixed-variant": "#6b3b00",
+                      "on-primary-fixed-variant": "#4326bd",
+                      "primary-fixed-dim": "#c8bfff",
+                      "secondary-fixed": "#acedff",
+                      "inverse-surface": "#312f38",
+                      "tertiary-fixed-dim": "#ffb875",
+                      "surface-container-highest": "#e5e0ed",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f7f1fe",
+                      "tertiary-fixed": "#ffdcc0",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#474554"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin_mobile": "16px",
+                      "gutter": "24px",
+                      "margin_desktop": "40px",
+                      "container_max_width": "1280px",
+                      "base_unit": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Outfit"],
+                      "label-sm": ["Outfit"],
+                      "display": ["Outfit"],
+                      "label-md": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "body-md": ["Outfit"],
+                      "headline-lg-mobile": ["Outfit"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-inverse-surface text-on-primary-container font-body-md overflow-hidden h-screen flex">
+<!-- Sidebar (NavigationDrawer) -->
+<aside class="hidden md:flex flex-col w-72 h-full bg-surface-container/90 dark:bg-surface-container/90 border-r border-white/20 dark:border-outline-variant/20 shadow-xl backdrop-blur-xl py-8 transition-all duration-200 ease-in-out">
+<div class="px-6 mb-10 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h1 class="font-display text-headline-md text-primary dark:text-primary-fixed-dim">BrainDump</h1>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<!-- Active: Home -->
+<a class="flex items-center gap-4 py-3 px-6 bg-secondary-container text-on-secondary-container font-bold rounded-r-full mr-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-body-md text-body-md">Home</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-body-md text-body-md">Inbox</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-body-md text-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-body-md text-body-md">Progress</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md text-body-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto px-6 border-t border-outline-variant/20 pt-6">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold">AC</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Chen</p>
+<p class="text-xs text-on-surface-variant">Deep Flow Mode</p>
+</div>
+</div>
+<button class="flex items-center gap-4 py-2 px-4 w-full text-error hover:bg-error/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md">Sign Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 relative overflow-y-auto scrollbar-hide bg-inverse-surface">
+<!-- Background Animation -->
+
+<div class="relative z-10 max-w-container_max_width mx-auto px-margin_mobile md:px-margin_desktop py-8">
+<!-- Top App Bar Content -->
+<header class="flex items-center justify-between h-16 mb-12">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-container">Dashboard</h2>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-primary/10 transition-colors text-primary-fixed-dim">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-primary/10 transition-colors text-primary-fixed-dim">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young tech professional with a clean, minimalist aesthetic. The lighting is soft and ethereal, set against a blurred studio background with hints of deep indigo and soft teal. The style is modern, sharp, and high-end digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUcM9hToBjxh9ama_cwQXWr3jb3-YgNQXId_jHRyKaWi1SYXyvIg9gxMf9iwgMqZR2JM43LbaUA4ICDjOn1K2io1h2dmDiyKv2ZGU8emn0zQq69l9uXCiRQItZeAQ3fL01ztYlD_Oa4u_lNcK0mRkJS0jBYpvXAa5GJQFcdxL9Uyn-5xaKF9JjoH8PD1mE5WhqiGmL3aJ8UOd6XVQMXQTE6zhCDjvxFzZdaK2GeduB5SDNTZOd4KC_"/>
+</div>
+</div>
+</header>
+<!-- Voice Capture Hero Panel -->
+<section class="mb-12">
+<div class="glass-panel rounded-3xl p-12 flex flex-col items-center justify-center text-center relative overflow-hidden">
+<!-- Subtle Glow in background -->
+<div class="absolute -top-24 -left-24 w-64 h-64 bg-primary/20 rounded-full blur-[100px]"></div>
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary/20 rounded-full blur-[100px]"></div>
+<h3 class="font-headline-md text-headline-md mb-2">Capture Your Thoughts</h3>
+<p class="text-on-surface-variant max-w-md mb-12">Deep Flow AI will automatically transcribe and organize your voice notes into actionable tasks.</p>
+<!-- Mic Button Container -->
+<div class="relative group">
+<!-- Rings animation -->
+<div class="absolute inset-0 rounded-full border-2 border-primary/40 animate-[pulse-ring_3s_infinite]"></div>
+<div class="absolute inset-0 rounded-full border-2 border-primary/20 animate-[pulse-ring_3s_infinite_1s]"></div>
+<button class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary text-on-primary shadow-xl mic-glow active:scale-90 transition-transform duration-200 flex items-center justify-center" id="mic-trigger">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+<div class="mt-8 flex items-center gap-2 px-4 py-2 bg-surface-variant/10 rounded-full border border-white/5">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-on-surface-variant">Ready to listen</span>
+</div>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Stat Card 1 -->
+<div class="glass-panel p-6 rounded-2xl flex items-center gap-5 group hover:bg-surface-variant/20 transition-colors cursor-pointer">
+<div class="w-14 h-14 rounded-xl bg-primary-container/30 flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined text-3xl">task</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-sm">Total Tasks</p>
+<h4 class="font-headline-md text-headline-md">12</h4>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-panel p-6 rounded-2xl flex items-center gap-5 group hover:bg-surface-variant/20 transition-colors cursor-pointer">
+<div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-sm">Completed Today</p>
+<h4 class="font-headline-md text-headline-md">3</h4>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-panel p-6 rounded-2xl flex items-center gap-5 group hover:bg-surface-variant/20 transition-colors cursor-pointer">
+<div class="w-14 h-14 rounded-xl bg-tertiary-container/30 flex items-center justify-center text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-3xl">inbox</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-sm">In Inbox</p>
+<h4 class="font-headline-md text-headline-md">2</h4>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Navigation (BottomNavBar) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-lg rounded-t-xl border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Progress</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        const micBtn = document.getElementById('mic-trigger');
+        let isListening = false;
+
+        micBtn.addEventListener('click', () => {
+            isListening = !isListening;
+            if(isListening) {
+                micBtn.classList.add('scale-110');
+                micBtn.style.boxShadow = '0 0 70px 10px rgba(88, 66, 211, 0.8)';
+                // Simulate voice activity via micro-interaction
+            } else {
+                micBtn.classList.remove('scale-110');
+                micBtn.style.boxShadow = '';
+            }
+        });
+    </script>
+</body></html>

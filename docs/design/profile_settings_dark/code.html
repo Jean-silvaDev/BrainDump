@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-secondary": "#ffffff",
+                    "outline": "#787586",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "surface-tint": "#5b45d6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#fcf8ff",
+                    "surface-container-high": "#ebe6f3",
+                    "secondary-container": "#6ee1fd",
+                    "background": "#fcf8ff",
+                    "primary": "#5842d3",
+                    "surface-dim": "#ddd8e4",
+                    "primary-fixed": "#e5deff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary-container": "#725ded",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary": "#894d00",
+                    "surface": "#fcf8ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001f26",
+                    "on-surface": "#1c1a23",
+                    "inverse-on-surface": "#f4effb",
+                    "tertiary-container": "#ad6200",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container": "#f1ecf8",
+                    "secondary-fixed-dim": "#62d5f1",
+                    "on-primary-fixed": "#180064",
+                    "inverse-primary": "#c8bfff",
+                    "outline-variant": "#c9c4d7",
+                    "on-secondary-container": "#006374",
+                    "on-background": "#1c1a23",
+                    "on-tertiary-fixed-variant": "#6b3b00",
+                    "on-primary-fixed-variant": "#4326bd",
+                    "primary-fixed-dim": "#c8bfff",
+                    "secondary-fixed": "#acedff",
+                    "inverse-surface": "#312f38",
+                    "tertiary-fixed-dim": "#ffb875",
+                    "surface-container-highest": "#e5e0ed",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f7f1fe",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#474554"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin_mobile": "16px",
+                    "gutter": "24px",
+                    "margin_desktop": "40px",
+                    "container_max_width": "1280px",
+                    "base_unit": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #1c1a23; /* fallback for on-surface background */
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(49, 47, 56, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .toggle-switch {
+            width: 52px;
+            height: 32px;
+            border-radius: 9999px;
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .toggle-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-inverse-surface text-on-surface-variant selection:bg-primary/30">
+<!-- Top App Bar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 text-primary dark:text-primary-fixed-dim w-full sticky top-0 backdrop-blur-lg border-b border-white/20 dark:border-outline-variant/20 shadow-sm flex items-center justify-between px-margin_mobile md:px-margin_desktop h-16 z-50">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined cursor-pointer active:scale-95 hover:bg-primary/10 transition-colors p-2 rounded-full">menu</button>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim !text-[24px]">Profile</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold shadow-md cursor-pointer active:scale-95 transition-transform overflow-hidden">
+<span class="text-label-md">JD</span>
+</div>
+</header>
+<main class="min-h-screen pb-32 px-margin_mobile md:px-margin_desktop pt-8 max-w-container_max_width mx-auto">
+<!-- User Identity Section -->
+<section class="mb-10">
+<div class="glass-panel p-8 rounded-3xl flex flex-col items-center gap-4 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+<div class="relative w-28 h-28 rounded-full bg-primary flex items-center justify-center shadow-xl border-4 border-surface-container-high z-10">
+<span class="text-display text-white !text-[42px] font-bold">JD</span>
+<button class="absolute bottom-0 right-0 bg-secondary-container p-2 rounded-full text-on-secondary-container shadow-lg border-2 border-surface-dim active:scale-90 transition-transform">
+<span class="material-symbols-outlined !text-[18px]">edit</span>
+</button>
+</div>
+<div class="text-center z-10 mt-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface-variant font-bold">João D.</h2>
+<p class="text-label-md text-primary font-medium tracking-wide">Deep Flow Mode</p>
+</div>
+<div class="flex gap-3 z-10 mt-4">
+<div class="px-4 py-2 bg-surface-variant/20 rounded-full border border-white/5 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">workspace_premium</span>
+<span class="text-label-sm uppercase tracking-widest text-on-surface-variant">Premium Member</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Settings List -->
+<section class="space-y-6">
+<div class="flex items-center gap-3 px-2">
+<span class="material-symbols-outlined text-primary">settings</span>
+<h3 class="text-label-md font-bold uppercase tracking-widest text-on-surface-variant/60">System Preferences</h3>
+</div>
+<div class="space-y-3">
+<!-- Notifications Toggle -->
+<div class="glass-panel p-6 rounded-2xl flex items-center justify-between hover:bg-surface-variant/20 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">Notifications</p>
+<p class="text-label-sm text-on-surface-variant/50">Stay updated with mental tasks</p>
+</div>
+</div>
+<div class="toggle-switch bg-primary flex items-center px-1" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-5')">
+<div class="toggle-thumb bg-white translate-x-5 shadow-md"></div>
+</div>
+</div>
+<!-- Dark Mode Toggle -->
+<div class="glass-panel p-6 rounded-2xl flex items-center justify-between hover:bg-surface-variant/20 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-secondary/10 rounded-xl group-hover:bg-secondary/20 transition-colors">
+<span class="material-symbols-outlined text-secondary">dark_mode</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">Dark Mode</p>
+<p class="text-label-sm text-on-surface-variant/50">Easier on the eyes at night</p>
+</div>
+</div>
+<div class="toggle-switch bg-primary flex items-center px-1">
+<div class="toggle-thumb bg-white translate-x-5 shadow-md"></div>
+</div>
+</div>
+<!-- Account Settings -->
+<div class="glass-panel p-6 rounded-2xl flex items-center justify-between hover:bg-surface-variant/20 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-surface-variant/20 rounded-xl">
+<span class="material-symbols-outlined">person_outline</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">Account Details</p>
+<p class="text-label-sm text-on-surface-variant/50">Manage your brain data</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="mt-12 space-y-6">
+<div class="flex items-center gap-3 px-2">
+<span class="material-symbols-outlined text-error">warning</span>
+<h3 class="text-label-md font-bold uppercase tracking-widest text-error/80">Account Actions</h3>
+</div>
+<button class="w-full glass-panel p-6 rounded-2xl flex items-center justify-between hover:bg-error/10 transition-colors cursor-pointer group border-error/10 active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-error/10 rounded-xl group-hover:bg-error/20 transition-colors">
+<span class="material-symbols-outlined text-error">logout</span>
+</div>
+<div class="text-left">
+<p class="font-body-md text-body-md text-error font-bold">Sign out</p>
+<p class="text-label-sm text-error/50">Securely exit your session</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-error/40">logout</span>
+</button>
+</section>
+<!-- App Branding / Version -->
+<footer class="mt-20 text-center space-y-2 opacity-30">
+<p class="font-display font-bold text-headline-md text-primary">BrainDump</p>
+<p class="text-label-sm">Version 4.2.0-stable</p>
+</footer>
+</main>
+<!-- Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-lg rounded-t-xl border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] h-20 pb-safe px-2 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Progress</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<!-- Subtle Background Atmosphere -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full"></div>
+</div>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Sign out simple alert
+        const signOutBtn = document.querySelector('button.text-error');
+        if(signOutBtn) {
+            signOutBtn.addEventListener('click', () => {
+                if(confirm('Are you sure you want to sign out?')) {
+                    console.log('User signing out...');
+                }
+            });
+        }
+    </script>
+</body></html>

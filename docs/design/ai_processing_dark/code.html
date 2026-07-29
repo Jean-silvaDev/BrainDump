@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Processing State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-color: hsl(220, 13%, 9%);
+            --accent-indigo: #5842d3;
+            --accent-teal: #62d5f1;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .radial-glow {
+            background: radial-gradient(circle at center, rgba(88, 66, 211, 0.15) 0%, rgba(28, 26, 35, 0) 70%);
+        }
+
+        /* Particle Orb Animation */
+        .orb-container {
+            perspective: 1000px;
+        }
+
+        .orb-core {
+            filter: blur(40px);
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { transform: scale(1); opacity: 0.5; }
+            to { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-indigo);
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        /* Progress Bar Animation */
+        .progress-shimmer {
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(114, 93, 237, 0.4) 50%,
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        @keyframes shimmer {
+            from { background-position: 200% 0; }
+            to { background-position: -200% 0; }
+        }
+
+        /* Text Transition */
+        .status-text {
+            transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .status-exit {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .status-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary": "#00687a",
+                        "on-secondary": "#ffffff",
+                        "outline": "#787586",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#fffbff",
+                        "surface-tint": "#5b45d6",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "surface-bright": "#fcf8ff",
+                        "surface-container-high": "#ebe6f3",
+                        "secondary-container": "#6ee1fd",
+                        "background": "#0e1116", /* Overridden by CSS variable but kept for utility */
+                        "primary": "#5842d3",
+                        "surface-dim": "#ddd8e4",
+                        "primary-fixed": "#e5deff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#2d1600",
+                        "primary-container": "#725ded",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary": "#894d00",
+                        "surface": "#fcf8ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001f26",
+                        "on-surface": "#1c1a23",
+                        "inverse-on-surface": "#f4effb",
+                        "tertiary-container": "#ad6200",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container": "#f1ecf8",
+                        "secondary-fixed-dim": "#62d5f1",
+                        "on-primary-fixed": "#180064",
+                        "inverse-primary": "#c8bfff",
+                        "outline-variant": "#c9c4d7",
+                        "on-secondary-container": "#006374",
+                        "on-background": "#1c1a23",
+                        "on-tertiary-fixed-variant": "#6b3b00",
+                        "on-primary-fixed-variant": "#4326bd",
+                        "primary-fixed-dim": "#c8bfff",
+                        "secondary-fixed": "#acedff",
+                        "inverse-surface": "#312f38",
+                        "tertiary-fixed-dim": "#ffb875",
+                        "surface-container-highest": "#e5e0ed",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f7f1fe",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#474554"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin_mobile": "16px",
+                        "gutter": "24px",
+                        "margin_desktop": "40px",
+                        "container_max_width": "1280px",
+                        "base_unit": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Outfit"],
+                        "label-sm": ["Outfit"],
+                        "display": ["Outfit"],
+                        "label-md": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative">
+<!-- Background Layer -->
+<div class="absolute inset-0 radial-glow z-0"></div>
+<!-- Atmospheric Ambient Particles (Canvas-less CSS particles) -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none z-10" id="particle-field">
+<!-- Particles generated by script -->
+</div>
+<!-- Main Content: Animated Orb -->
+<div class="relative z-20 flex flex-col items-center orb-container">
+<!-- Central Glow Orb -->
+<div class="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+<!-- Diffuse Background Glow -->
+<div class="absolute w-full h-full rounded-full bg-primary/20 orb-core"></div>
+<!-- Rotating Inner Rings -->
+<div class="absolute w-3/4 h-3/4 border-2 border-primary/40 rounded-full animate-[spin_8s_linear_infinite]"></div>
+<div class="absolute w-1/2 h-1/2 border border-secondary-container/40 rounded-full animate-[spin_12s_linear_infinite_reverse]"></div>
+<!-- Central Icon -->
+<div class="relative z-30 flex items-center justify-center w-20 h-20 bg-primary-container rounded-full shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-4xl text-on-primary-container" style="font-variation-settings: 'FILL' 1;">
+                    psychology
+                </span>
+</div>
+</div>
+<!-- Status Messaging -->
+<div class="mt-12 text-center px-margin_mobile">
+<h2 class="font-headline-md text-headline-md-mobile md:text-headline-md text-white/90 tracking-wide status-text" id="status-display">
+                Transcribing your voice...
+            </h2>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant/60">
+                Crafting mental clarity
+            </p>
+</div>
+</div>
+<!-- Indeterminate Progress Bar (Bottom) -->
+<div class="absolute bottom-12 w-full max-w-xs md:max-w-md px-margin_mobile z-30">
+<div class="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full w-full progress-shimmer"></div>
+<!-- Indicator pips -->
+<div class="absolute inset-0 flex justify-between px-4 items-center">
+<div class="w-1 h-1 bg-white/20 rounded-full"></div>
+<div class="w-1 h-1 bg-white/20 rounded-full"></div>
+<div class="w-1 h-1 bg-white/20 rounded-full"></div>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center px-1">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim/40 uppercase">Awaiting Completion</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim/40 uppercase">Phase 1/2</span>
+</div>
+</div>
+<!-- Atmospheric Overlay: Glass Edge -->
+<div class="fixed inset-4 border border-white/5 rounded-[2rem] pointer-events-none z-50"></div>
+<script>
+        // Particle Field Generation
+        const particleField = document.getElementById('particle-field');
+        const particleCount = 25;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'floating-particle';
+            
+            const size = Math.random() * 4 + 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const duration = Math.random() * 10 + 10;
+            const delay = Math.random() * 5;
+            const opacity = Math.random() * 0.5 + 0.1;
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.opacity = opacity;
+            
+            // Random floating animation
+            const keyframes = [
+                { transform: 'translate(0, 0)', opacity: opacity },
+                { transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`, opacity: 0 },
+                { transform: 'translate(0, 0)', opacity: opacity }
+            ];
+
+            particle.animate(keyframes, {
+                duration: duration * 1000,
+                iterations: Infinity,
+                delay: delay * 1000,
+                easing: 'ease-in-out'
+            });
+
+            particleField.appendChild(particle);
+        }
+
+        // Status Text Rotation Logic
+        const statusDisplay = document.getElementById('status-display');
+        const messages = ["Transcribing your voice...", "Organizing your tasks..."];
+        let currentMsgIndex = 0;
+
+        function rotateStatus() {
+            setTimeout(() => {
+                statusDisplay.classList.add('status-exit');
+                
+                setTimeout(() => {
+                    currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+                    statusDisplay.textContent = messages[currentMsgIndex];
+                    statusDisplay.classList.remove('status-exit');
+                    statusDisplay.classList.add('status-enter');
+                    
+                    setTimeout(() => {
+                        statusDisplay.classList.remove('status-enter');
+                    }, 800);
+                }, 800);
+            }, 3000);
+        }
+
+        rotateStatus();
+    </script>
+</body></html>

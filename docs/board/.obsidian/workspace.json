@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "e831a60d91cb0f21",
+    "type": "split",
+    "children": [
+      {
+        "id": "f248149f78d1f752",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "caac00b3ec93eab7",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Nova aba"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7344ff5866688ae1",
+    "type": "split",
+    "children": [
+      {
+        "id": "18e10f1a44c3b91d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5eb9d803f04e26b8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de arquivos"
+            }
+          },
+          {
+            "id": "cb11c224cfc6f0ca",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Procurar"
+            }
+          },
+          {
+            "id": "567db0fa80c98c00",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a98859fb86870474",
+    "type": "split",
+    "children": [
+      {
+        "id": "f5fd7154a197002f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f3c4d8aa9652c6d6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "features/03-transcricao-parsing.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Links inversos para 03-transcricao-parsing"
+            }
+          },
+          {
+            "id": "593a78136a60ef93",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "features/03-transcricao-parsing.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links de saída para 03-transcricao-parsing"
+            }
+          },
+          {
+            "id": "1860382a242837f7",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "357d886ba090e80e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas as propriedades"
+            }
+          },
+          {
+            "id": "8c555bceef4a3c3e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "features/03-transcricao-parsing.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumário de 03-transcricao-parsing"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false
+    }
+  },
+  "active": "5eb9d803f04e26b8",
+  "lastOpenFiles": [
+    "Sem título.base",
+    "features/01-autenticacao.md",
+    "Sem título.canvas",
+    "Kanban.md",
+    "features/03-transcricao-parsing.md",
+    "features/02-captura-voz.md",
+    "Bem-vindo.md",
+    "00-Board.md",
+    "features/07-notificacoes.md",
+    "features/06-sincronizacao.md",
+    "features/05-lista-tarefas.md",
+    "features/04-tela-revisao.md",
+    "features"
+  ]
+}

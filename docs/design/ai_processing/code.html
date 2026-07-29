@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Processing State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-panel {
+            background: rgba(31, 31, 40, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .waveform-bar {
+            animation: waveform-height 1.2s ease-in-out infinite;
+        }
+        
+        @keyframes waveform-height {
+            0%, 100% { height: 12px; opacity: 0.4; }
+            50% { height: 64px; opacity: 1; }
+        }
+
+        .progress-line-animation {
+            width: 30%;
+            animation: indeterminate 2s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+
+        @keyframes indeterminate {
+            0% { left: -35%; right: 100%; }
+            60% { left: 100%; right: -90%; }
+            100% { left: 100%; right: -90%; }
+        }
+
+        .fade-in-out {
+            animation: text-fade 4s ease-in-out infinite;
+        }
+
+        @keyframes text-fade {
+            0%, 10%, 90%, 100% { opacity: 0; transform: translateY(10px); }
+            20%, 80% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#464555",
+                        "inverse-surface": "#e4e1ee",
+                        "inverse-primary": "#4c42e9",
+                        "inverse-on-surface": "#302f39",
+                        "secondary-fixed": "#90f1ff",
+                        "on-surface": "#e4e1ee",
+                        "on-secondary-fixed": "#001f23",
+                        "outline": "#918fa1",
+                        "on-tertiary": "#542100",
+                        "on-tertiary-container": "#fffaf9",
+                        "surface-container-lowest": "#0e0d16",
+                        "tertiary-fixed-dim": "#ffb68f",
+                        "on-secondary": "#00363c",
+                        "on-background": "#e4e1ee",
+                        "surface-container": "#1f1f28",
+                        "tertiary-container": "#be5400",
+                        "secondary-fixed-dim": "#54d8e8",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-tertiary-fixed": "#331100",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-container-highest": "#35343e",
+                        "on-secondary-container": "#003b42",
+                        "primary": "#c3c0ff",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#e2dfff",
+                        "background": "#13121c",
+                        "secondary": "#54d8e8",
+                        "surface-bright": "#393842",
+                        "tertiary": "#ffb68f",
+                        "on-surface-variant": "#c7c4d8",
+                        "on-primary-fixed": "#0f0069",
+                        "on-tertiary-fixed-variant": "#773200",
+                        "on-secondary-fixed-variant": "#004f56",
+                        "on-error": "#690005",
+                        "primary-container": "#635bff",
+                        "surface-container-low": "#1b1b24",
+                        "surface-dim": "#13121c",
+                        "on-primary-container": "#fefaff",
+                        "secondary-container": "#02aebe",
+                        "surface-variant": "#35343e",
+                        "surface-container-high": "#2a2933",
+                        "surface-tint": "#c3c0ff",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#321ed2",
+                        "surface": "#13121c",
+                        "error-container": "#93000a",
+                        "on-primary": "#1d00a5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "40px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "margin-desktop": "64px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "display": ["Outfit"],
+                        "label-sm": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Global Layout Wrapper -->
+<div class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+<!-- Animated Background Shader (Ambient Flow) -->
+
+<!-- Main Screen Content (Mock background for context) -->
+<div class="w-full max-w-md px-margin-mobile pt-24 space-y-lg blur-sm">
+<div class="glass-panel p-md rounded-xl">
+<div class="h-4 w-1/3 bg-surface-variant rounded-full mb-md"></div>
+<div class="h-32 w-full bg-surface-container rounded-lg"></div>
+</div>
+<div class="glass-panel p-md rounded-xl">
+<div class="h-4 w-1/4 bg-surface-variant rounded-full mb-md"></div>
+<div class="h-20 w-full bg-surface-container rounded-lg"></div>
+</div>
+</div>
+<!-- FULL SCREEN PROCESSING OVERLAY -->
+<div class="fixed inset-0 z-[100] glass-panel backdrop-blur-2xl flex flex-col items-center justify-center px-margin-mobile">
+<!-- Close/Cancel Button -->
+<button class="fixed top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-highest/50 text-on-surface active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<!-- Centered Processing Container -->
+<div class="w-full max-w-sm flex flex-col items-center text-center">
+<!-- Animated Waveform Visualizer -->
+<div class="flex items-center justify-center gap-1.5 h-24 mb-12">
+<div class="waveform-bar w-1.5 bg-primary rounded-full" style="animation-delay: 0.1s;"></div>
+<div class="waveform-bar w-1.5 bg-secondary rounded-full" style="animation-delay: 0.3s;"></div>
+<div class="waveform-bar w-1.5 bg-primary rounded-full" style="animation-delay: 0.5s;"></div>
+<div class="waveform-bar w-1.5 bg-secondary rounded-full" style="animation-delay: 0.2s;"></div>
+<div class="waveform-bar w-1.5 bg-primary rounded-full" style="animation-delay: 0.4s;"></div>
+<div class="waveform-bar w-1.5 bg-secondary rounded-full" style="animation-delay: 0.6s;"></div>
+<div class="waveform-bar w-1.5 bg-primary rounded-full" style="animation-delay: 0.1s;"></div>
+<div class="waveform-bar w-1.5 bg-secondary rounded-full" style="animation-delay: 0.3s;"></div>
+<div class="waveform-bar w-1.5 bg-primary rounded-full" style="animation-delay: 0.5s;"></div>
+</div>
+<!-- Main Label Transition -->
+<div class="relative h-12 w-full mb-md overflow-hidden">
+<div class="w-full font-headline-md text-headline-md text-on-surface flex items-center justify-center transition-all duration-700" id="status-label">
+                        Transcribing your voice...
+                    </div>
+</div>
+<!-- Progress Subtext & Bar -->
+<div class="w-48 flex flex-col items-center gap-md">
+<span class="font-label-md text-label-md text-on-surface-variant tracking-widest animate-pulse">THINKING...</span>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden relative">
+<div class="progress-line-animation absolute top-0 h-full bg-primary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Contextual Decorative Element (Soft Glow behind UI) -->
+<div class="absolute -z-10 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+</div>
+</div>
+<script>
+        // Micro-interaction: Label Transitions
+        const labels = [
+            "Transcribing your voice...",
+            "Organizing your tasks...",
+            "Finding clarity...",
+            "Finalizing thoughts..."
+        ];
+        let labelIndex = 0;
+        const statusElement = document.getElementById('status-label');
+
+        setInterval(() => {
+            statusElement.style.opacity = '0';
+            statusElement.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                labelIndex = (labelIndex + 1) % labels.length;
+                statusElement.innerText = labels[labelIndex];
+                statusElement.style.opacity = '1';
+                statusElement.style.transform = 'translateY(0)';
+            }, 700);
+        }, 4000);
+
+        // Logic for indeterminate progress speed shift
+        const progressBar = document.querySelector('.progress-line-animation');
+        let speed = 2;
+        
+        // Simulating processing load changes
+        setInterval(() => {
+            speed = 1 + Math.random() * 2;
+            progressBar.style.animationDuration = `${speed}s`;
+        }, 3000);
+    </script>
+</body></html>

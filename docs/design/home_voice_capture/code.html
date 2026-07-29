@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>BrainDump - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#464555",
+                    "inverse-surface": "#e4e1ee",
+                    "inverse-primary": "#4c42e9",
+                    "inverse-on-surface": "#302f39",
+                    "secondary-fixed": "#90f1ff",
+                    "on-surface": "#e4e1ee",
+                    "on-secondary-fixed": "#001f23",
+                    "outline": "#918fa1",
+                    "on-tertiary": "#542100",
+                    "on-tertiary-container": "#fffaf9",
+                    "surface-container-lowest": "#0e0d16",
+                    "tertiary-fixed-dim": "#ffb68f",
+                    "on-secondary": "#00363c",
+                    "on-background": "#e4e1ee",
+                    "surface-container": "#1f1f28",
+                    "tertiary-container": "#be5400",
+                    "secondary-fixed-dim": "#54d8e8",
+                    "tertiary-fixed": "#ffdbca",
+                    "on-tertiary-fixed": "#331100",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-container-highest": "#35343e",
+                    "on-secondary-container": "#003b42",
+                    "primary": "#c3c0ff",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#e2dfff",
+                    "background": "#13121c",
+                    "secondary": "#54d8e8",
+                    "surface-bright": "#393842",
+                    "tertiary": "#ffb68f",
+                    "on-surface-variant": "#c7c4d8",
+                    "on-primary-fixed": "#0f0069",
+                    "on-tertiary-fixed-variant": "#773200",
+                    "on-secondary-fixed-variant": "#004f56",
+                    "on-error": "#690005",
+                    "primary-container": "#635bff",
+                    "surface-container-low": "#1b1b24",
+                    "surface-dim": "#13121c",
+                    "on-primary-container": "#fefaff",
+                    "secondary-container": "#02aebe",
+                    "surface-variant": "#35343e",
+                    "surface-container-high": "#2a2933",
+                    "surface-tint": "#c3c0ff",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#321ed2",
+                    "surface": "#13121c",
+                    "error-container": "#93000a",
+                    "on-primary": "#1d00a5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "margin-mobile": "20px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "margin-desktop": "64px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "body-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-sm": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #13121c;
+            color: #e4e1ee;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(31, 31, 40, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(195, 192, 255, 0.4); }
+            70% { box-shadow: 0 0 0 30px rgba(195, 192, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(195, 192, 255, 0); }
+        }
+
+        .mic-pulse {
+            animation: pulse-glow 3s infinite;
+        }
+
+        .waveform-bar {
+            width: 3px;
+            background: #c3c0ff;
+            border-radius: 99px;
+            animation: bounce 1.2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="dark bg-background min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-sm">
+<div class="font-display text-display text-primary dark:text-primary tracking-tight" style="font-size: 24px;">BrainDump</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional high-fidelity close-up portrait of a tech-savvy individual in a dimly lit modern office environment. The lighting is dominated by soft indigo and teal ambient glows from high-end computer screens. The overall aesthetic is futuristic and minimalist, consistent with a dark-mode luxury productivity application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA87FpCvL1a8rjvg6XY670tsnSrueIQsp62VC4EyMRoMJ8vEaVAKHw-Gt9E3pOLRqh-A71PQx4W3U_HU6rYygke1FCaMfwjE1L4vZXjY1idN29liTAp-8Tw4IfbpW2kuhk9_4lazvCry9unqhx1Vds397BbpDT50H_wppwOfFU9pyTZ8BijSoo0oob2WZyS3QjeoYLx0XSO1ILOCAzwTa8v3sA7c79EP8zo2L7Jmd4AR3QIMeDKZkJX"/>
+</div>
+</div>
+</header>
+<main class="pt-16 pb-32 px-margin-mobile max-w-lg mx-auto flex flex-col items-center min-h-screen">
+<!-- Welcome Message -->
+<section class="w-full mt-lg mb-xl text-center">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Clear your mind.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Speak your thoughts, we'll handle the rest.</p>
+</section>
+<!-- Voice Capture Section -->
+<section class="flex flex-col items-center justify-center my-xl">
+<div class="relative group cursor-pointer" id="mic-trigger">
+<!-- Outer Ring Glow -->
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
+<!-- Mic Button -->
+<button class="relative w-48 h-48 rounded-full bg-primary-container flex items-center justify-center mic-pulse active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[64px] text-on-primary-container" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<!-- Floating Waveforms (Aesthetic Decorative) -->
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-1 h-8">
+<div class="waveform-bar" style="animation-delay: 0.1s"></div>
+<div class="waveform-bar" style="animation-delay: 0.3s"></div>
+<div class="waveform-bar" style="animation-delay: 0.2s"></div>
+<div class="waveform-bar" style="animation-delay: 0.5s"></div>
+<div class="waveform-bar" style="animation-delay: 0.4s"></div>
+</div>
+</div>
+<p class="mt-lg font-label-md text-label-md text-primary animate-pulse">Tap to record</p>
+</section>
+<!-- Recent Tasks / Inbox Preview -->
+<section class="w-full mt-xl">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">Recent Thoughts</h2>
+<button class="font-label-sm text-label-sm text-primary hover:underline">View All</button>
+</div>
+<div class="space-y-md">
+<!-- Task Card 1 -->
+<div class="glass-card p-md rounded-xl flex flex-col gap-sm hover:translate-y-[-2px] transition-all duration-300">
+<div class="flex justify-between items-start">
+<span class="font-body-lg text-body-lg text-on-surface">Finalize project proposal for the design sprint</span>
+<div class="px-sm py-xs rounded-full bg-tertiary-container/30 border border-tertiary/20">
+<span class="font-label-sm text-label-sm text-tertiary">Priority</span>
+</div>
+</div>
+<div class="flex items-center gap-sm mt-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Captured 2h ago</span>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="glass-card p-md rounded-xl flex flex-col gap-sm hover:translate-y-[-2px] transition-all duration-300">
+<div class="flex justify-between items-start">
+<span class="font-body-lg text-body-lg text-on-surface">Buy ingredients for sourdough starter</span>
+<div class="px-sm py-xs rounded-full bg-secondary-container/30 border border-secondary/20">
+<span class="font-label-sm text-label-sm text-secondary">Life</span>
+</div>
+</div>
+<div class="flex items-center gap-sm mt-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Captured 5h ago</span>
+</div>
+</div>
+<!-- Task Card 3 -->
+<div class="glass-card p-md rounded-xl flex flex-col gap-sm hover:translate-y-[-2px] transition-all duration-300 opacity-60">
+<div class="flex justify-between items-start">
+<span class="font-body-lg text-body-lg text-on-surface">Call Mom about the weekend plans</span>
+<div class="px-sm py-xs rounded-full bg-primary-container/30 border border-primary/20">
+<span class="font-label-sm text-label-sm text-primary">Personal</span>
+</div>
+</div>
+<div class="flex items-center gap-sm mt-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Yesterday</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] rounded-t-xl">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary font-bold relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full Active: scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<!-- Inbox -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 Active: scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="inbox">inbox</span>
+<span class="font-label-sm text-label-sm">Inbox</span>
+</button>
+<!-- Tasks -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 Active: scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary/80 Active: scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple Interaction Logic
+        const micBtn = document.getElementById('mic-trigger');
+        const statusText = micBtn.nextElementSibling;
+        let isRecording = false;
+
+        micBtn.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                statusText.innerText = 'Listening...';
+                statusText.classList.add('text-error');
+                micBtn.querySelector('.bg-primary-container').classList.replace('bg-primary-container', 'bg-error-container');
+                micBtn.querySelector('.text-on-primary-container').classList.replace('text-on-primary-container', 'text-on-error-container');
+            } else {
+                statusText.innerText = 'Tap to record';
+                statusText.classList.remove('text-error');
+                micBtn.querySelector('.bg-error-container').classList.replace('bg-error-container', 'bg-primary-container');
+                micBtn.querySelector('.text-on-error-container').classList.replace('text-on-error-container', 'text-on-primary-container');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BrainDump - Cognitive Flow Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(252, 248, 255, 0.05);
+        }
+        .glass-panel {
+            backdrop-filter: blur(16px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+        .mic-gradient {
+            background: linear-gradient(135deg, #5842d3 0%, #00687a 100%);
+        }
+        .mic-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 66, 211, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(88, 66, 211, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 66, 211, 0); }
+        }
+        .floating-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .floating-card:hover {
+            transform: translateY(-8px);
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #1c1a23; /* fallback for deep dark surface */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "secondary": "#00687a",
+                      "on-secondary": "#ffffff",
+                      "outline": "#787586",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#fffbff",
+                      "surface-tint": "#5b45d6",
+                      "on-secondary-fixed-variant": "#004e5c",
+                      "surface-bright": "#fcf8ff",
+                      "surface-container-high": "#ebe6f3",
+                      "secondary-container": "#6ee1fd",
+                      "background": "#fcf8ff",
+                      "primary": "#5842d3",
+                      "surface-dim": "#ddd8e4",
+                      "primary-fixed": "#e5deff",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed": "#2d1600",
+                      "primary-container": "#725ded",
+                      "surface-variant": "#e5e0ed",
+                      "tertiary": "#894d00",
+                      "surface": "#fcf8ff",
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed": "#001f26",
+                      "on-surface": "#1c1a23",
+                      "inverse-on-surface": "#f4effb",
+                      "tertiary-container": "#ad6200",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-container": "#f1ecf8",
+                      "secondary-fixed-dim": "#62d5f1",
+                      "on-primary-fixed": "#180064",
+                      "inverse-primary": "#c8bfff",
+                      "outline-variant": "#c9c4d7",
+                      "on-secondary-container": "#006374",
+                      "on-background": "#1c1a23",
+                      "on-tertiary-fixed-variant": "#6b3b00",
+                      "on-primary-fixed-variant": "#4326bd",
+                      "primary-fixed-dim": "#c8bfff",
+                      "secondary-fixed": "#acedff",
+                      "inverse-surface": "#312f38",
+                      "tertiary-fixed-dim": "#ffb875",
+                      "surface-container-highest": "#e5e0ed",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f7f1fe",
+                      "tertiary-fixed": "#ffdcc0",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#474554"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin_mobile": "16px",
+                      "gutter": "24px",
+                      "margin_desktop": "40px",
+                      "container_max_width": "1280px",
+                      "base_unit": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Outfit"],
+                      "label-sm": ["Outfit"],
+                      "display": ["Outfit"],
+                      "label-md": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "body-md": ["Outfit"],
+                      "headline-lg-mobile": ["Outfit"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- WebGL Background Decoration (Subtle animated atmospheric depth) -->
+<div class="fixed inset-0 pointer-events-none z-0">
+
+</div>
+<!-- Sidebar (NavigationDrawer) -->
+<aside class="hidden md:flex flex-col py-8 gap-2 h-screen w-72 backdrop-blur-xl bg-surface/90 dark:bg-surface-container/90 border-r border-white/20 dark:border-outline-variant/20 shadow-xl sticky top-0 z-40" id="nav-drawer">
+<div class="px-8 mb-10 flex flex-col gap-1 items-start">
+<div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-3xl">psychology</span>
+</div>
+<h1 class="font-display text-display text-primary leading-none">BrainDump</h1>
+<p class="text-on-surface-variant text-label-md">Mental Clarity Engine</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-4 py-3 px-8 bg-secondary-container text-on-secondary-container font-bold rounded-r-full mr-4 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-body-md text-body-md">Home</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-8 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-body-md text-body-md">Inbox</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-8 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-body-md text-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-8 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-body-md text-body-md">Progress</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-8 text-on-surface-variant hover:bg-surface-variant/30 rounded-r-full mr-4 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md text-body-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto px-8">
+<div class="flex items-center gap-3 p-3 rounded-2xl bg-surface-container-high border border-outline-variant/30">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of Alex Chen, a clean-shaven Asian male in his late 20s with a focused expression, wearing a minimalist black turtleneck against a soft-focus studio background with cool purple ambient lighting. The style is modern, cinematic, and professional, reflecting a tech-savvy user persona." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2QtM8cBd9wFaonMWR6U5Bg4Q2EFJQiJ76VErYBOt6xbBXNY-hZ6xp8HuG2XYa93HIPSpFr8AVmVaZeSH1Xv_GH2QnPay_P_KMDCB_Q0gndjTHoHJWKzkHhvjUGRI7MzXuykz0H1gX3v2Un5-y_W4Tk_Z4KlXtVekdZcUbwzzHhE0nedWsOJpcZZblPtVph8oCPGGS7JVCbiw8n4v6x9Hxv2O59vnod0c-7g-83cR4tvvtzzEwjh0d"/>
+<div class="overflow-hidden">
+<p class="font-bold text-on-surface truncate">Alex Chen</p>
+<p class="text-xs text-secondary font-medium">Deep Flow Mode</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Mobile TopBar -->
+<header class="md:hidden flex items-center justify-between px-margin_mobile h-16 w-full sticky top-0 backdrop-blur-lg bg-surface/80 dark:bg-surface-dim/80 border-b border-white/20 dark:border-outline-variant/20 shadow-sm z-50">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95">menu</span>
+<h2 class="font-display text-headline-md text-primary">BrainDump</h2>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar profile picture of a young professional with a warm smile, set against a blurred indoor environment with soft bokeh effects. Minimalist tech-focused aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWDyuE7tK1jNtrsMEvV7tTrLfDlIlsfgZjiynxfQRhYZCx_Ucc9K0oVrPSN1Dqn6nFRk4rkZl4uYxWjU1DdlVkLyr9xn3YBgiSirJdSuC5qghmPi05RTR0pZ-qSYNZcJqduQkaFB8rn6TCeDWeWdH7Vr0h94OWFMVrqfx8uWbGNyiApy_-XdqN9bgIcQyDwi4xdciE98VpZOkAuYlWOFvCWAW3qmSoPCDJVR6Qlpd6dJmD6BdJfGgt"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative flex-1 z-10 px-margin_mobile md:px-margin_desktop py-8 max-w-container_max_width mx-auto w-full">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Good morning, Alex.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">Your cognitive load is currently <span class="text-primary font-bold">Optimal</span>. 4 high-priority insights are waiting for your review.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 rounded-full border border-outline-variant/50 text-on-surface hover:bg-surface-variant transition-all font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                    Settings
+                </button>
+<button class="px-6 py-3 rounded-full mic-gradient text-white shadow-lg shadow-primary/30 hover:opacity-90 transition-all font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add</span>
+                    New Session
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Main Voice Capture Card -->
+<div class="md:col-span-8 glass-panel rounded-[32px] p-8 flex flex-col items-center justify-center min-h-[440px] relative overflow-hidden shadow-[0_8px_32px_rgba(88,66,211,0.08)]">
+<!-- Abstract Pulse Animation -->
+<div class="absolute inset-0 pointer-events-none">
+
+</div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="mb-8">
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-widest bg-primary/10 px-4 py-1 rounded-full">Voice Capture Active</span>
+</div>
+<button class="w-48 h-48 rounded-full mic-gradient flex items-center justify-center text-white mic-pulse cursor-pointer border-[8px] border-white/20 hover:scale-105 transition-transform duration-300" id="mic-trigger">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<h3 class="mt-8 font-headline-md text-headline-md text-on-surface">Tap to dump your thoughts</h3>
+<p class="text-on-surface-variant font-body-md text-body-md mt-2 max-w-sm">We'll transcribe, categorize, and prioritize your stream of consciousness in real-time.</p>
+</div>
+<!-- Live Waveform Visualizer Placeholder -->
+<div class="absolute bottom-8 left-8 right-8 h-12 flex items-center justify-center gap-1">
+<div class="w-1 h-4 bg-primary/30 rounded-full"></div>
+<div class="w-1 h-8 bg-primary/50 rounded-full"></div>
+<div class="w-1 h-6 bg-primary/40 rounded-full"></div>
+<div class="w-1 h-10 bg-primary rounded-full"></div>
+<div class="w-1 h-12 bg-primary/80 rounded-full"></div>
+<div class="w-1 h-6 bg-primary/40 rounded-full"></div>
+<div class="w-1 h-10 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-primary/30 rounded-full"></div>
+<div class="w-1 h-2 bg-primary/20 rounded-full"></div>
+</div>
+</div>
+<!-- Stats Sidebar Column -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Focus Score Card -->
+<div class="glass-panel rounded-[24px] p-6 floating-card">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-xl">target</span>
+<span class="text-label-sm font-label-sm text-secondary">+12% vs Yesterday</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Focus Clarity Index</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="text-4xl font-bold text-on-surface">84</span>
+<span class="text-on-surface-variant mb-1">/100</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-4">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 84%"></div>
+</div>
+</div>
+<!-- Recent Captured Insights List -->
+<div class="glass-panel rounded-[24px] p-6 flex-1 flex flex-col gap-4">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Recent Insights</h4>
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-2xl hover:bg-surface-variant transition-colors cursor-pointer group">
+<div class="w-2 h-2 rounded-full bg-error mt-2"></div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface leading-tight">Quarterly budget projection for tech stack</p>
+<p class="text-xs text-on-surface-variant mt-1">2 mins ago • Urgent</p>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-on-surface-variant transition-opacity">chevron_right</span>
+</div>
+<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-2xl hover:bg-surface-variant transition-colors cursor-pointer group">
+<div class="w-2 h-2 rounded-full bg-tertiary mt-2"></div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface leading-tight">Idea: Voice-controlled garden irrigation</p>
+<p class="text-xs text-on-surface-variant mt-1">45 mins ago • Personal</p>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-on-surface-variant transition-opacity">chevron_right</span>
+</div>
+<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-2xl hover:bg-surface-variant transition-colors cursor-pointer group">
+<div class="w-2 h-2 rounded-full bg-secondary mt-2"></div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface leading-tight">Meeting notes from design sprint session</p>
+<p class="text-xs text-on-surface-variant mt-1">2 hours ago • Work</p>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-on-surface-variant transition-opacity">chevron_right</span>
+</div>
+</div>
+<button class="mt-auto py-2 text-primary font-label-md text-label-md hover:underline text-center w-full">View all 128 captures</button>
+</div>
+</div>
+<!-- Bottom Row Secondary Cards -->
+<div class="md:col-span-4 glass-panel rounded-[24px] p-6 relative overflow-hidden group min-h-[200px]">
+<div class="absolute -right-12 -bottom-12 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[160px]">auto_awesome</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Smart Summaries</h4>
+<p class="text-on-surface-variant font-body-md text-body-md">AI will automatically group your sporadic thoughts into logical project folders every Friday evening.</p>
+<div class="mt-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">Enabled</span>
+</div>
+</div>
+<div class="md:col-span-4 glass-panel rounded-[24px] p-6 min-h-[200px]">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Upcoming Sync</h4>
+<div class="mt-4 flex items-center gap-4">
+<div class="text-center bg-primary-container text-on-primary-container rounded-2xl p-3 w-16">
+<p class="text-xs uppercase font-bold">Oct</p>
+<p class="text-2xl font-bold">14</p>
+</div>
+<div>
+<p class="font-bold text-on-surface">Weekly Deep Review</p>
+<p class="text-sm text-on-surface-variant">Scheduled for 10:00 AM</p>
+</div>
+</div>
+<div class="mt-6 flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="A portrait of a colleague, smiling casually, wearing a denim shirt, soft natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEAA_KtimhqaWxSUA3Zo-PLB_eBsuR97q6WrNPWnbbdgbT2s9cz7LFit4AmeOxN9JNJCpRMCVIP_v2vEGUomq5g2DEn5DY6t5pynPQALxhW1j7XtAU1QOfZGwwVvfrSv97tcPIrUbtd1wJvjmPpBEcNiD2A0Vs7JUYdoaHN_-CooR5uXyd9LYCiwih9NpZFe1p5N-u8pJS9610oOEGG8AMNMsOVFfiVlwKwfTS5gRw6hqJ7ixNTSCf"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="A portrait of a second colleague, a woman with glasses and a friendly expression, professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAViHaKlYrtvYlVmjjP-nhGMtk_nh-8qRwiMimYtjNYamAzmyCHaaqjgAEacHQnfy4VYtiV1mRjYvSuBCrK2D2A_sMdc72I5gViFvBPji0ZLRgkB19YtICfpLkfBRpNssEfT-stiH5iDYOCFAbhv30TvZfoZv77_izYJelkAM-ROZtmBhdkqocj1VIoGR4JHfv9FvijUpoKlwKDzZ8a6xlItmkInKXKA9VDuISfina1-9FtcJm3J_77"/>
+<div class="w-8 h-8 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center text-[10px] font-bold">+3</div>
+</div>
+</div>
+<div class="md:col-span-4 glass-panel rounded-[24px] overflow-hidden group min-h-[200px]">
+<div class="w-full h-24 bg-cover bg-center" data-alt="A tranquil, high-resolution photo of a serene mountain landscape reflected in a still lake at dawn. The colors are muted blues and soft purples, creating a sense of mental peace and cognitive flow. Minimalist and professional style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBQrZjWWcobWZk_O9tVLRsBQB3AHHe87yHqakrvq238a5r8wctX48qB9EpMqqp8BpyWN7c107YJszCGPDqBNlvk0gx2ipaPxiKIXLeHf_QQCB8B5QGiPERq-oiJJKoxq3hZaNFIri5hq1yMF-ErngXCtxC9CruRIfQUxPXklOf4FKFXhEu4E-jspCRdpK5thlbXR8V2ZzoFDizYedzfjDoXLuaPBz8A9OG6l5EV2WuSDkNb-w4J2iYr')"></div>
+<div class="p-6">
+<h4 class="font-bold text-on-surface">Mindfulness Moment</h4>
+<p class="text-sm text-on-surface-variant">Take a 5-minute pause to reset your attention before the next session.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-lg rounded-t-xl bg-surface/80 dark:bg-surface-container-low/80 border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button (Only for specific primary tasks) -->
+<button class="fixed bottom-24 right-6 md:bottom-10 md:right-10 w-14 h-14 rounded-full mic-gradient text-white shadow-2xl flex items-center justify-center z-50 hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">mic</span>
+</button>
+<script>
+        const micBtn = document.getElementById('mic-trigger');
+        let isRecording = false;
+
+        micBtn.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                micBtn.classList.add('scale-110');
+                micBtn.style.boxShadow = '0 0 40px rgba(88, 66, 211, 0.6)';
+            } else {
+                micBtn.classList.remove('scale-110');
+                micBtn.style.boxShadow = 'none';
+            }
+        });
+
+        // Simple parallax effect for cards on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.floating-card');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            cards.forEach(card => {
+                card.style.transform = `translate(${mouseX * 10}px, ${mouseY * 10}px)`;
+            });
+        });
+    </script>
+</body></html>

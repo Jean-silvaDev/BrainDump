@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Your Tasks - BrainDump</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config Verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-secondary": "#ffffff",
+                    "outline": "#787586",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "surface-tint": "#5b45d6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#fcf8ff",
+                    "surface-container-high": "#ebe6f3",
+                    "secondary-container": "#6ee1fd",
+                    "background": "#fcf8ff",
+                    "primary": "#5842d3",
+                    "surface-dim": "#ddd8e4",
+                    "primary-fixed": "#e5deff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary-container": "#725ded",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary": "#894d00",
+                    "surface": "#fcf8ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001f26",
+                    "on-surface": "#1c1a23",
+                    "inverse-on-surface": "#f4effb",
+                    "tertiary-container": "#ad6200",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container": "#f1ecf8",
+                    "secondary-fixed-dim": "#62d5f1",
+                    "on-primary-fixed": "#180064",
+                    "inverse-primary": "#c8bfff",
+                    "outline-variant": "#c9c4d7",
+                    "on-secondary-container": "#006374",
+                    "on-background": "#1c1a23",
+                    "on-tertiary-fixed-variant": "#6b3b00",
+                    "on-primary-fixed-variant": "#4326bd",
+                    "primary-fixed-dim": "#c8bfff",
+                    "secondary-fixed": "#acedff",
+                    "inverse-surface": "#312f38",
+                    "tertiary-fixed-dim": "#ffb875",
+                    "surface-container-highest": "#e5e0ed",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f7f1fe",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#474554"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin_mobile": "16px",
+                    "gutter": "24px",
+                    "margin_desktop": "40px",
+                    "container_max_width": "1280px",
+                    "base_unit": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fcf8ff; /* Clean white/surface background per request */
+            font-family: 'Outfit', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px -2px rgba(88, 66, 211, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .priority-pip {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface">
+<!-- TopAppBar Mapping -->
+<header class="w-full sticky top-0 backdrop-blur-lg bg-surface/80 shadow-sm z-50 flex items-center justify-between px-margin_mobile md:px-margin_desktop h-16 border-b border-white/20">
+<div class="flex items-center gap-4">
+<div class="cursor-pointer active:scale-95 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h1 class="font-display text-headline-md text-primary">BrainDump</h1>
+</div>
+<div class="cursor-pointer active:scale-95">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a young tech professional with short dark hair and a friendly expression. The lighting is soft and natural, emphasizing a high-end, clean aesthetic with a blurred office background. The style is modern, minimalist, and uses a gentle color palette of soft indigos and warm whites to match a premium UI feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt9IZrEvPWBltbJ3GlP6Y-hgr4lIyjMwQBrtNnLjhVgrIuyGsSHoiMggVxL4b_ddy7L13WpD75p5_bCsgoQtk5wHgo1Jr2-UewM7TQ8o0mEd-Adtws4289_FQptJ_I_y9gp5up3lo82w82Ynkh88lE1i0uPmYxwiHELf-HESi1yIwL8DQ9SmWww_Rn8M06JKJLGLevErFhnOHrQ77V4IbqiOCBjXb5NQfM8uiKqcajNwOhJ_zZuQL0"/>
+</div>
+</div>
+</header>
+<main class="max-w-container_max_width mx-auto px-margin_mobile md:px-margin_desktop pt-8 pb-32">
+<!-- Main Header -->
+<div class="mb-8">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Review Your Tasks</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review and confirm your captured thoughts before they enter your flow.</p>
+</div>
+<!-- Task Cards Grid -->
+<div class="grid gap-gutter md:grid-cols-2 lg:grid-cols-3">
+<!-- Card 1 -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-4 relative group">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full">Work</span>
+<div class="priority-pip bg-error shadow-[0_0_8px_rgba(186,26,26,0.5)]"></div>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Finalize Q3 Design Strategy</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Update the stakeholder deck with the new glassmorphism visual tokens and accessibility report.</p>
+</div>
+<div class="mt-auto pt-4 flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-label-md text-label-md">Today, 4:00 PM</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-4 relative group">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full">Personal</span>
+<div class="priority-pip bg-tertiary-container shadow-[0_0_8px_rgba(173,98,0,0.5)]"></div>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Morning Yoga Session</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">30-minute deep flow sequence focusing on mental clarity and hip mobility before the work sprint.</p>
+</div>
+<div class="mt-auto pt-4 flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">event</span>
+<span class="font-label-md text-label-md">Tomorrow, 7:30 AM</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-4 relative group">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full">Side Project</span>
+<div class="priority-pip bg-outline shadow-[0_0_8px_rgba(120,117,134,0.3)]"></div>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Refactor API Layer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Clean up the redundant controller logic and implement the new caching layer for the dashboard.</p>
+</div>
+<div class="mt-auto pt-4 flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">checklist</span>
+<span class="font-label-md text-label-md">8 Subtasks</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors text-primary">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Confirm All Action Section -->
+<div class="mt-12 flex flex-col items-center gap-6">
+<button class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary rounded-full font-headline-md shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">task_alt</span>
+                Confirm All
+            </button>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">3 items pending validation</p>
+</div>
+</main>
+<!-- BottomNavBar Mapping -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-lg bg-surface/80 rounded-t-xl border-t border-white/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] flex justify-around items-center h-20 pb-safe px-2">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>BrainDump - Voice Capture</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-secondary": "#ffffff",
+                    "outline": "#787586",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "surface-tint": "#5b45d6",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "surface-bright": "#fcf8ff",
+                    "surface-container-high": "#ebe6f3",
+                    "secondary-container": "#6ee1fd",
+                    "background": "#0b0d12", /* hsl(220, 13%, 9%) equivalent */
+                    "primary": "#5842d3",
+                    "surface-dim": "#ddd8e4",
+                    "primary-fixed": "#e5deff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary-container": "#725ded",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary": "#894d00",
+                    "surface": "#fcf8ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001f26",
+                    "on-surface": "#1c1a23",
+                    "inverse-on-surface": "#f4effb",
+                    "tertiary-container": "#ad6200",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container": "#f1ecf8",
+                    "secondary-fixed-dim": "#62d5f1",
+                    "on-primary-fixed": "#180064",
+                    "inverse-primary": "#c8bfff",
+                    "outline-variant": "#c9c4d7",
+                    "on-secondary-container": "#006374",
+                    "on-background": "#fcf8ff",
+                    "on-tertiary-fixed-variant": "#6b3b00",
+                    "on-primary-fixed-variant": "#4326bd",
+                    "primary-fixed-dim": "#c8bfff",
+                    "secondary-fixed": "#acedff",
+                    "inverse-surface": "#312f38",
+                    "tertiary-fixed-dim": "#ffb875",
+                    "surface-container-highest": "#e5e0ed",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f7f1fe",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#a3a1af"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin_mobile": "16px",
+                    "gutter": "24px",
+                    "margin_desktop": "40px",
+                    "container_max_width": "1280px",
+                    "base_unit": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "display": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0b0d12;
+            color: #fcf8ff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(28, 26, 35, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mic-pulse {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(88, 66, 211, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 40px 10px rgba(88, 66, 211, 0.6); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(88, 66, 211, 0.4); transform: scale(1); }
+        }
+        .status-bar-icon {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen overflow-hidden select-none">
+<!-- Status Bar (Android Style) -->
+<div class="flex justify-between items-center px-6 pt-3 pb-2 text-on-surface-variant h-10 w-full sticky top-0 z-50">
+<span class="font-bold text-sm">9:41</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined status-bar-icon">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined status-bar-icon">wifi</span>
+<span class="material-symbols-outlined status-bar-icon">battery_full</span>
+</div>
+</div>
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 backdrop-blur-lg border-b border-white/20 dark:border-outline-variant/20 shadow-sm flex items-center justify-between px-margin_mobile md:px-margin_desktop h-16 z-40 bg-surface/80 dark:bg-surface-dim/80">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim cursor-pointer active:scale-95 transition-colors hover:bg-primary/10 p-2 rounded-full">menu</span>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim text-2xl">BrainDump</h1>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary/20 overflow-hidden cursor-pointer active:scale-95 transition-transform">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a young professional with short dark hair, wearing a stylish minimalist grey hoodie, against a soft-focus background of a modern workspace with neon violet accents. High-quality digital photography with a cinematic shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh8Kwy4XzxeuUzGl4w5YIQ9wP_8b_bOCJTo2yXkptJf67-ek4nDI5hIO25kgGOTeYjqQsBsu_GZBfbprzzOMSc_au2VfX3hXyZzds3VJTjxnRo9hkQ1GUFF3XnBH5IWF1OeyFIV2g8FdFkQrGMEqTidIdVP-ahCeke_jTD2EwcLMiQJtjRRc-DBa-7f3A5umsA_GPhjl511dgZ04-kVZr53oI3D2xR2uib3ORZOB1PtMMcJ7IzChkj"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative pb-32">
+<!-- Ambient Background Shader -->
+<div class="absolute inset-0 z-0 opacity-40">
+
+</div>
+<div class="relative z-10 flex flex-col items-center justify-center flex-1 px-margin_mobile gap-12">
+<!-- Voice Capture UI -->
+<div class="flex flex-col items-center gap-6">
+<div class="relative">
+<!-- Mic Button (hsl(252, 82%, 67%) is #725ded / primary-container) -->
+<button class="w-[88px] h-[88px] bg-[#725ded] rounded-full flex items-center justify-center text-white shadow-lg mic-pulse active:scale-90 transition-all" id="mic-btn">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<!-- Visual feedback ring -->
+<div class="absolute -inset-4 border-2 border-primary/20 rounded-full animate-ping opacity-25"></div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant animate-pulse">Tap to start recording</p>
+</div>
+<!-- Inbox Preview Strip -->
+<div class="w-full max-w-md">
+<div class="flex justify-between items-end mb-4 px-2">
+<h2 class="font-headline-md text-headline-md text-white">Recent Dumps</h2>
+<span class="text-primary font-label-md text-label-md cursor-pointer hover:underline">View all</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Task Card 1 -->
+<div class="glass-card p-5 rounded-2xl flex items-center justify-between group active:scale-[0.98] transition-transform">
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-white">Send project proposal</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(186,26,26,0.6)]"></div>
+<span class="text-on-surface-variant font-label-sm text-label-sm">High Priority</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Task Card 2 -->
+<div class="glass-card p-5 rounded-2xl flex items-center justify-between group active:scale-[0.98] transition-transform">
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-white">Buy groceries</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Inbox</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-lg rounded-t-xl border-t border-white/20 dark:border-outline-variant/20 shadow-[0_-4px_12px_rgba(88,66,211,0.1)] bg-surface/80 dark:bg-surface-container-low/80 flex justify-around items-center h-20 pb-safe px-2">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</button>
+<!-- Inbox -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-all rounded-full">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</button>
+<!-- Tasks -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-all rounded-full">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</button>
+<!-- Progress -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-all rounded-full">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Progress</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 active:scale-90 transition-all rounded-full">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple Interaction: Mic button toggle state simulation
+        const micBtn = document.getElementById('mic-btn');
+        let isRecording = false;
+
+        micBtn.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                micBtn.style.backgroundColor = '#ba1a1a'; // Switch to error color for recording
+                micBtn.querySelector('span').innerText = 'stop';
+                document.querySelector('p').innerText = 'Listening...';
+                document.querySelector('p').classList.add('text-error');
+            } else {
+                micBtn.style.backgroundColor = '#725ded'; // Back to primary-container
+                micBtn.querySelector('span').innerText = 'mic';
+                document.querySelector('p').innerText = 'Tap to start recording';
+                document.querySelector('p').classList.remove('text-error');
+            }
+        });
+
+        // Add haptic-like scaling on touch
+        const navButtons = document.querySelectorAll('nav button');
+        navButtons.forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BrainDump.Application/BrainDump.Application.csproj" />
+    <Project Path="src/BrainDump.Domain/BrainDump.Domain.csproj" />
+    <Project Path="src/BrainDump.Infrastructure/BrainDump.Infrastructure.csproj" />
+    <Project Path="src/BrainDump.Maui/BrainDump.Maui.csproj" />
+    <Project Path="src/BrainDump.Web/BrainDump.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BrainDump.Application.Tests/BrainDump.Application.Tests.csproj" />
+    <Project Path="tests/BrainDump.Domain.Tests/BrainDump.Domain.Tests.csproj" />
+    <Project Path="tests/BrainDump.Infrastructure.Tests/BrainDump.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
