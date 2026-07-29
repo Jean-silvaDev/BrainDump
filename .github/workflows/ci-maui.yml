@@ -1,0 +1,40 @@
+name: .NET MAUI Build Verification
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+    paths:
+      - 'src/BrainDump.Maui/**'
+      - '.github/workflows/ci-maui.yml'
+  pull_request:
+    branches: [ "main", "develop" ]
+    paths:
+      - 'src/BrainDump.Maui/**'
+      - '.github/workflows/ci-maui.yml'
+  workflow_dispatch:
+
+jobs:
+  build-maui:
+    name: Build MAUI Apps
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install MAUI Workload
+        run: dotnet workload install maui
+
+      - name: Restore MAUI Project
+        run: dotnet restore src/BrainDump.Maui/BrainDump.Maui.csproj
+
+      - name: Build MAUI (Windows Target)
+        run: dotnet build src/BrainDump.Maui/BrainDump.Maui.csproj -c Release -f net10.0-windows10.0.19041.0
+
+      - name: Build MAUI (Android Target)
+        run: dotnet build src/BrainDump.Maui/BrainDump.Maui.csproj -c Release -f net10.0-android

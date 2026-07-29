@@ -79,7 +79,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
                 return null;
             }
 
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
 
             return Guid.TryParse(userIdClaim, out var userId) ? userId : null;

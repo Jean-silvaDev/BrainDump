@@ -1,4 +1,4 @@
-﻿namespace BrainDump.Application;
+namespace BrainDump.Application;
 
 public class Class1
 {

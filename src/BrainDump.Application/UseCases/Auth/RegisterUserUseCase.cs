@@ -36,7 +36,7 @@ public class RegisterUserUseCase
 
         var accessToken = _jwtTokenGenerator.GenerateAccessToken(user);
         var (refreshToken, expiry) = _jwtTokenGenerator.GenerateRefreshToken();
-        
+
         user.SetRefreshToken(refreshToken, expiry);
         await _userRepository.AddAsync(user, cancellationToken);
 
