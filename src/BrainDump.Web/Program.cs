@@ -54,7 +54,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapeamento dos endpoints de autenticação
+// Mapeamento dos endpoints
 app.MapAuthEndpoints();
+app.MapVoiceEndpoints();
 
 app.Run();
+

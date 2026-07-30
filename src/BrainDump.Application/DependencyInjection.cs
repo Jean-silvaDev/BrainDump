@@ -1,4 +1,5 @@
 using BrainDump.Application.UseCases.Auth;
+using BrainDump.Application.UseCases.VoiceEntries.RecordVoiceEntry;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BrainDump.Application;
@@ -10,7 +11,9 @@ public static class DependencyInjection
         services.AddScoped<RegisterUserUseCase>();
         services.AddScoped<LoginUseCase>();
         services.AddScoped<RefreshTokenUseCase>();
+        services.AddScoped<RecordVoiceEntryUseCase>();
 
         return services;
     }
 }
+

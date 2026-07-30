@@ -16,6 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BrainDump.Application\BrainDump.Application.csproj" />
     <ProjectReference Include="..\BrainDump.Infrastructure\BrainDump.Infrastructure.csproj" />
+    <ProjectReference Include="..\BrainDump.Shared.UI\BrainDump.Shared.UI.csproj" />
   </ItemGroup>
 
 </Project>
+

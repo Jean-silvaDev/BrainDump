@@ -39,9 +39,12 @@ public static class DependencyInjection
 
         // Injeção de dependências das implementações
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<BrainDump.Domain.Repositories.IVoiceEntryRepository, VoiceEntryRepository>();
+        services.AddSingleton<IAudioStorageService, Storage.LocalAudioStorageService>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         return services;
     }
 }
+
