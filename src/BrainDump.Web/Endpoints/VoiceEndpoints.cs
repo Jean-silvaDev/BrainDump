@@ -15,6 +15,7 @@ public static class VoiceEndpoints
             [FromForm] int? durationSeconds,
             ClaimsPrincipal user,
             RecordVoiceEntryUseCase useCase,
+            BrainDump.Infrastructure.BackgroundServices.VoiceProcessingQueue queue,
             CancellationToken ct) =>
         {
             if (file == null || file.Length == 0)
@@ -43,8 +44,12 @@ public static class VoiceEndpoints
 
                 var response = await useCase.ExecuteAsync(command, ct);
 
+                // Enfileira em background para transcrição e parsing por IA
+                await queue.EnqueueAsync(response.Id, ct);
+
                 return Results.Accepted($"/api/voice/entries/{response.Id}", response);
             }
+
             catch (ArgumentException ex)
             {
                 return Results.BadRequest(new { error = ex.Message });
