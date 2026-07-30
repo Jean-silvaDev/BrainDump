@@ -41,7 +41,9 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<BrainDump.Domain.Repositories.IVoiceEntryRepository, VoiceEntryRepository>();
         services.AddScoped<BrainDump.Domain.Repositories.IParsedTaskItemRepository, ParsedTaskItemRepository>();
+        services.AddScoped<BrainDump.Domain.Repositories.ITaskItemRepository, TaskItemRepository>();
         services.AddSingleton<IAudioStorageService, Storage.LocalAudioStorageService>();
+
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 

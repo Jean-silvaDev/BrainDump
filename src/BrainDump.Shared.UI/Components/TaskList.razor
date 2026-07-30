@@ -1,0 +1,138 @@
+@using BrainDump.Domain.Entities
+
+<div class="task-list-container">
+    <div class="task-list-header glass-card">
+        <div class="filter-tabs">
+            <button class="tab-btn @(currentFilter == null ? "active" : "")" @onclick="() => SetFilter(null)">
+                Todas (@TotalCount)
+            </button>
+            <button class="tab-btn @(currentFilter == false ? "active" : "")" @onclick="() => SetFilter(false)">
+                Pendentes (@PendingCount)
+            </button>
+            <button class="tab-btn @(currentFilter == true ? "active" : "")" @onclick="() => SetFilter(true)">
+                Concluídas (@CompletedCount)
+            </button>
+        </div>
+
+        <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Buscar tarefas..." value="@searchTerm" @oninput="OnSearchInput" />
+        </div>
+    </div>
+
+    @if (!FilteredItems.Any())
+    {
+        <div class="empty-tasks-state glass-card">
+            <p>Nenhuma tarefa encontrada.</p>
+        </div>
+    }
+    else
+    {
+        <div class="tasks-grid">
+            @foreach (var task in FilteredItems)
+            {
+                <div class="task-card glass-card @(task.IsCompleted ? "completed" : "") priority-border-@task.Priority.ToString().ToLower()">
+                    <div class="task-checkbox-col">
+                        <input type="checkbox" checked="@task.IsCompleted" @onchange="() => ToggleCompletion(task)" />
+                    </div>
+
+                    <div class="task-info-col">
+                        <span class="task-title @(task.IsCompleted ? "strike" : "")">@task.Title</span>
+                        
+                        <div class="task-badges">
+                            <span class="badge category-badge">@task.Category</span>
+                            <span class="badge priority-badge priority-@task.Priority.ToString().ToLower()">@task.Priority</span>
+                            @if (task.DueDate.HasValue)
+                            {
+                                <span class="badge due-badge @(IsOverdue(task.DueDate.Value) ? "overdue" : "")">
+                                    ⏰ @task.DueDate.Value.ToString("dd/MM/yyyy HH:mm")
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="task-actions-col">
+                        <button class="btn-icon delete" title="Excluir tarefa" @onclick="() => DeleteTask(task.Id)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public IEnumerable<TaskViewModel> Tasks { get; set; } = Enumerable.Empty<TaskViewModel>();
+    [Parameter] public EventCallback<Guid> OnToggle { get; set; }
+    [Parameter] public EventCallback<Guid> OnDelete { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    private bool? currentFilter = false; // por padrão exibe tarefas pendentes
+    private string searchTerm = string.Empty;
+
+    private int TotalCount => Tasks.Count();
+    private int PendingCount => Tasks.Count(t => !t.IsCompleted);
+    private int CompletedCount => Tasks.Count(t => t.IsCompleted);
+
+    private IEnumerable<TaskViewModel> FilteredItems
+    {
+        get
+        {
+            var result = Tasks;
+            if (currentFilter.HasValue)
+            {
+                result = result.Where(t => t.IsCompleted == currentFilter.Value);
+            }
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var lower = searchTerm.ToLower();
+                result = result.Where(t => t.Title.ToLower().Contains(lower));
+            }
+            return result;
+        }
+    }
+
+    private void SetFilter(bool? filter)
+    {
+        currentFilter = filter;
+    }
+
+    private async Task OnSearchInput(ChangeEventArgs e)
+    {
+        searchTerm = e.Value?.ToString() ?? string.Empty;
+        await OnSearch.InvokeAsync(searchTerm);
+    }
+
+    private async Task ToggleCompletion(TaskViewModel task)
+    {
+        task.IsCompleted = !task.IsCompleted; // Optimistic UI
+        await OnToggle.InvokeAsync(task.Id);
+    }
+
+    private async Task DeleteTask(Guid id)
+    {
+        await OnDelete.InvokeAsync(id);
+    }
+
+    private bool IsOverdue(DateTime dueDate)
+    {
+        return dueDate < DateTime.UtcNow;
+    }
+
+    public class TaskViewModel
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public Category Category { get; set; }
+        public Priority Priority { get; set; }
+        public DateTime? DueDate { get; set; }
+        public bool IsCompleted { get; set; }
+    }
+}

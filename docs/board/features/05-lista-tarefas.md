@@ -1,6 +1,6 @@
 ---
 tags: [feature, lista-tarefas]
-status: todo
+status: done
 camadas: [Domain, Application, Infrastructure, Maui, Web]
 ---
 
@@ -10,22 +10,25 @@ Como usuário, quero ver todas as minhas tarefas organizadas por categoria e pri
 
 ## Tarefas
 
-- [ ] Modelar entidade `Task` (com status, prazo, categoria, prioridade) no Domain 🔺 #domain
-- [ ] Definir caso de uso `ListTasks` (com filtros) na Application #application
-- [ ] Definir caso de uso `CompleteTask` na Application #application
-- [ ] Definir caso de uso `EditTask` / `DeleteTask` na Application #application
-- [ ] Criar componente de Listagem de Tarefas em `BrainDump.Shared.UI` (Blazor) com filtros iterativos #ui
-- [ ] Implementar hierarquia tipográfica (fonte secundária para metadata, pesos variados para prioridades) nos cards #ui
-- [ ] Adicionar micro-interações: hover/press states responsivos nos cards #ui
-- [ ] Testes unitários dos casos de uso de listagem/edição/conclusão #testes
+- [x] Modelar entidade `TaskItem` (com status, prazo, categoria, prioridade) no Domain 🔺 #domain
+- [x] Definir caso de uso `GetTasks` (com filtros por categoria, prioridade, status e busca) na Application #application
+- [x] Definir caso de uso `ToggleTaskCompletion` (concluir/reabrir) na Application #application
+- [x] Definir caso de uso `EditTask` / `DeleteTask` na Application #application
+- [x] Criar componente de Listagem de Tarefas em `BrainDump.Shared.UI` (Blazor `TaskList.razor`) com filtros iterativos e `MainDashboard.razor` #ui
+- [x] Implementar hierarquia tipográfica (fonte secundária para metadata, pesos variados para prioridades) nos cards #ui
+- [x] Adicionar micro-interações: hover/press states responsivos e destaque em tarefas urgentes #ui
+- [x] Testes unitários dos casos de uso de listagem/edição/conclusão (`GetTasksUseCaseTests` e `ToggleTaskCompletionUseCaseTests`) #testes
 
 ## Critérios de aceite
 
 - Lista atualiza em tempo real após concluir, editar ou excluir uma tarefa.
 - Filtros por categoria e prioridade funcionam corretamente.
 - Tarefas de alta prioridade possuem destaque visual automático.
-- Cards devem apresentar um sutil efeito visual ao interagir (hover ou click/touch).
+- Cards apresentam um sutil efeito visual ao interagir (hover ou click/touch).
 
 ## Notas de implementação
 
-> - **UI/UX:** Componente em RCL para garantir que os estilos CSS (hover, active, focus) funcionem da mesma maneira na Web e no toque no Mobile.
+> - **Server-side Filtering:** `ITaskItemRepository.GetFilteredAsync` aceita `Category?`, `Priority?`, `IsCompleted?` e `SearchTerm` executando filtros otimizados no banco de dados.
+> - **Dashboard Consolidado:** Criado `MainDashboard.razor` no RCL unindo Captura de Voz, Tela de Revisão e Lista de Tarefas em um único container.
+> - **Optimistic UI:** O componente `TaskList.razor` atualiza o estado de conclusão instantaneamente no client antes da resposta da API.
+> - **Minimal API Endpoints:** Criado o grupo `/api/tasks` (`GET /`, `PATCH /{id}/toggle`, `PUT /{id}`, `DELETE /{id}`).

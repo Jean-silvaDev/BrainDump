@@ -1,0 +1,108 @@
+@using BrainDump.Domain.Entities
+
+<div class="review-bottom-sheet glass-panel @(IsOpen ? "open" : "")">
+    <div class="sheet-header">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title-row">
+            <h3>Revisão de Tarefas Suggestion (@Items.Count())</h3>
+            @if (Items.Any())
+            {
+                <button class="btn-confirm-all" @onclick="ConfirmAll">
+                    ✨ Aceitar Tudo
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="sheet-content">
+        @if (!Items.Any())
+        {
+            <div class="empty-review-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <p>Nenhuma tarefa pendente de revisão!</p>
+            </div>
+        }
+        else
+        {
+            <div class="parsed-items-list">
+                @foreach (var item in Items)
+                {
+                    <div class="parsed-card glass-card">
+                        <div class="card-main">
+                            <input class="title-input" value="@item.Title" @onchange="@(async (ChangeEventArgs e) => await OnTitleChanged(item, e.Value?.ToString()))" />
+
+                            
+                            <div class="card-meta">
+                                <span class="badge category-badge">@item.Category</span>
+                                <span class="badge priority-badge priority-@item.Priority.ToString().ToLower()">@item.Priority</span>
+                                @if (item.DueDate.HasValue)
+                                {
+                                    <span class="badge due-badge">📅 @item.DueDate.Value.ToString("dd/MM HH:mm")</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="btn-action approve" title="Aceitar" @onclick="() => ApproveItem(item.Id)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                            <button class="btn-action discard" title="Descartar" @onclick="() => DiscardItem(item.Id)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsOpen { get; set; } = false;
+    [Parameter] public IEnumerable<ParsedTaskViewModel> Items { get; set; } = Enumerable.Empty<ParsedTaskViewModel>();
+    [Parameter] public EventCallback OnConfirmAll { get; set; }
+    [Parameter] public EventCallback<Guid> OnApprove { get; set; }
+    [Parameter] public EventCallback<Guid> OnDiscard { get; set; }
+    [Parameter] public EventCallback<ParsedTaskViewModel> OnItemUpdated { get; set; }
+
+    private async Task ConfirmAll()
+    {
+        await OnConfirmAll.InvokeAsync();
+    }
+
+    private async Task ApproveItem(Guid id)
+    {
+        await OnApprove.InvokeAsync(id);
+    }
+
+    private async Task DiscardItem(Guid id)
+    {
+        await OnDiscard.InvokeAsync(id);
+    }
+
+    private async Task OnTitleChanged(ParsedTaskViewModel item, string? newTitle)
+    {
+        if (!string.IsNullOrWhiteSpace(newTitle))
+        {
+            item.Title = newTitle;
+            await OnItemUpdated.InvokeAsync(item);
+        }
+    }
+
+    public class ParsedTaskViewModel
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public Category Category { get; set; }
+        public Priority Priority { get; set; }
+        public DateTime? DueDate { get; set; }
+    }
+}

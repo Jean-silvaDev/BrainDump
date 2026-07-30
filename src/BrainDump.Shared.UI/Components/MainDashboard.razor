@@ -1,0 +1,72 @@
+<div class="main-dashboard-layout">
+    <header class="dashboard-header glass-card">
+        <div class="header-brand">
+            <h2>🧠 BrainDump</h2>
+            <span class="tagline">Agilidade total em captura de pensamentos</span>
+        </div>
+        
+        @if (PendingReviewCount > 0)
+        {
+            <button class="btn-review-badge" @onclick="ToggleReviewSheet">
+                🔔 @PendingReviewCount rascunhos para revisar
+            </button>
+        }
+    </header>
+
+    <main class="dashboard-body">
+        <section class="voice-section">
+            <VoiceRecorder OnAudioCaptured="OnAudioCapturedHandler" />
+        </section>
+
+        <section class="tasks-section">
+            <TaskList Tasks="Tasks"
+                      OnToggle="OnToggleTaskHandler"
+                      OnDelete="OnDeleteTaskHandler"
+                      OnSearch="OnSearchTaskHandler" />
+        </section>
+    </main>
+
+    <ReviewBottomSheet IsOpen="isReviewSheetOpen"
+                       Items="PendingReviewItems"
+                       OnConfirmAll="OnConfirmAllReviewHandler"
+                       OnApprove="OnApproveReviewHandler"
+                       OnDiscard="OnDiscardReviewHandler"
+                       OnItemUpdated="OnUpdateReviewHandler" />
+</div>
+
+@code {
+    [Parameter] public int PendingReviewCount { get; set; } = 0;
+    [Parameter] public IEnumerable<TaskList.TaskViewModel> Tasks { get; set; } = Enumerable.Empty<TaskList.TaskViewModel>();
+    [Parameter] public IEnumerable<ReviewBottomSheet.ParsedTaskViewModel> PendingReviewItems { get; set; } = Enumerable.Empty<ReviewBottomSheet.ParsedTaskViewModel>();
+
+    [Parameter] public EventCallback<VoiceRecorder.AudioCapturedEventArgs> OnAudioCaptured { get; set; }
+    [Parameter] public EventCallback<Guid> OnToggleTask { get; set; }
+    [Parameter] public EventCallback<Guid> OnDeleteTask { get; set; }
+    [Parameter] public EventCallback<string> OnSearchTask { get; set; }
+
+    [Parameter] public EventCallback OnConfirmAllReview { get; set; }
+    [Parameter] public EventCallback<Guid> OnApproveReview { get; set; }
+    [Parameter] public EventCallback<Guid> OnDiscardReview { get; set; }
+    [Parameter] public EventCallback<ReviewBottomSheet.ParsedTaskViewModel> OnUpdateReview { get; set; }
+
+    private bool isReviewSheetOpen = false;
+
+    private void ToggleReviewSheet()
+    {
+        isReviewSheetOpen = !isReviewSheetOpen;
+    }
+
+    private async Task OnAudioCapturedHandler(VoiceRecorder.AudioCapturedEventArgs e)
+    {
+        await OnAudioCaptured.InvokeAsync(e);
+    }
+
+    private async Task OnToggleTaskHandler(Guid id) => await OnToggleTask.InvokeAsync(id);
+    private async Task OnDeleteTaskHandler(Guid id) => await OnDeleteTask.InvokeAsync(id);
+    private async Task OnSearchTaskHandler(string q) => await OnSearchTask.InvokeAsync(q);
+
+    private async Task OnConfirmAllReviewHandler() => await OnConfirmAllReview.InvokeAsync();
+    private async Task OnApproveReviewHandler(Guid id) => await OnApproveReview.InvokeAsync(id);
+    private async Task OnDiscardReviewHandler(Guid id) => await OnDiscardReview.InvokeAsync(id);
+    private async Task OnUpdateReviewHandler(ReviewBottomSheet.ParsedTaskViewModel vm) => await OnUpdateReview.InvokeAsync(vm);
+}

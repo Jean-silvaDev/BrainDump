@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<VoiceEntry> VoiceEntries => Set<VoiceEntry>();
     public DbSet<ParsedTaskItem> ParsedTaskItems => Set<ParsedTaskItem>();
+    public DbSet<TaskItem> TaskItems => Set<TaskItem>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
