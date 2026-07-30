@@ -45,9 +45,10 @@ public class ProcessVoiceEntryTranscriptionUseCase
 
             // 2. Executa a Transcrição (Speech-To-Text)
             using var audioStream = new MemoryStream();
-            // Para simplificar a demonstração, se o stream local puder ser aberto via IAudioStorageService ou File
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), voiceEntry.AudioFilePath);
+            var cleanRelativePath = voiceEntry.AudioFilePath.TrimStart('/', '\\');
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), cleanRelativePath);
             if (File.Exists(fullPath))
+
             {
                 using var fileStream = File.OpenRead(fullPath);
                 await fileStream.CopyToAsync(audioStream, cancellationToken);

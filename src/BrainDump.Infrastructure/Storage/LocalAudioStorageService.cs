@@ -31,8 +31,9 @@ public class LocalAudioStorageService : IAudioStorageService
         if (string.IsNullOrWhiteSpace(fileName))
             throw new ArgumentException("Nome do arquivo não fornecido.", nameof(fileName));
 
-        var fullPath = Path.Combine(_storagePath, fileName);
-        
+        var safeFileName = Path.GetFileName(fileName);
+        var fullPath = Path.Combine(_storagePath, safeFileName);
+
         using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync: true))
         {
             if (audioStream.CanSeek)
@@ -42,8 +43,9 @@ public class LocalAudioStorageService : IAudioStorageService
             await audioStream.CopyToAsync(fileStream, cancellationToken);
         }
 
-        var relativePath = Path.Combine("uploads", "voice-entries", fileName).Replace('\\', '/');
+        var relativePath = Path.Combine("uploads", "voice-entries", safeFileName).Replace('\\', '/');
         return relativePath;
+
     }
 
     public Task DeleteAudioAsync(string filePath, CancellationToken cancellationToken = default)

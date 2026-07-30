@@ -11,18 +11,13 @@ public static class VoiceEndpoints
         var group = app.MapGroup("/api/voice").WithTags("Captura de Voz").RequireAuthorization();
 
         group.MapPost("/entries", async (
-            IFormFile file,
+            IFormFile? file,
             [FromForm] int? durationSeconds,
             ClaimsPrincipal user,
             RecordVoiceEntryUseCase useCase,
             BrainDump.Infrastructure.BackgroundServices.VoiceProcessingQueue queue,
             CancellationToken ct) =>
         {
-            if (file == null || file.Length == 0)
-            {
-                return Results.BadRequest(new { error = "Nenhum arquivo de áudio foi enviado." });
-            }
-
             var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value
                            ?? user.FindFirst("sub")?.Value;
 
@@ -31,13 +26,20 @@ public static class VoiceEndpoints
                 return Results.Unauthorized();
             }
 
+            if (file is null || file.Length == 0)
+            {
+                return Results.BadRequest(new { error = "Nenhum arquivo de áudio foi enviado." });
+            }
+
+            var safeFileName = Path.GetFileName(file.FileName);
+
             try
             {
                 using var stream = file.OpenReadStream();
                 var command = new RecordVoiceEntryCommand(
                     userId,
                     stream,
-                    file.FileName,
+                    safeFileName,
                     file.ContentType,
                     durationSeconds ?? 0,
                     file.Length);
@@ -49,7 +51,6 @@ public static class VoiceEndpoints
 
                 return Results.Accepted($"/api/voice/entries/{response.Id}", response);
             }
-
             catch (ArgumentException ex)
             {
                 return Results.BadRequest(new { error = ex.Message });
