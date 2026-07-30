@@ -1,0 +1,166 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<div class="voice-recorder-container glass-panel">
+    <div class="mic-button-wrapper">
+        @if (isRecording)
+        {
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring-secondary"></div>
+        }
+
+        <button class="mic-button @(isRecording ? "recording" : "")" @onclick="ToggleRecording" disabled="@isUploading" aria-label="Microfone">
+            @if (isUploading)
+            {
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin">
+                    <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                </svg>
+            }
+            else if (isRecording)
+            {
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                </svg>
+            }
+            else
+            {
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="22"></line>
+                </svg>
+            }
+        </button>
+    </div>
+
+    <div class="recorder-status-text">
+        @if (isUploading)
+        {
+            <span>Enviando áudio...</span>
+        }
+        else if (isRecording)
+        {
+            <span>Ouvindo seus pensamentos...</span>
+        }
+        else
+        {
+            <span>Toque no microfone para falar</span>
+        }
+    </div>
+
+    @if (isRecording)
+    {
+        <div class="timer-badge">
+            @FormatTimer(elapsedSeconds)
+        </div>
+
+        <div class="recorder-actions">
+            <button class="btn-cancel" @onclick="CancelRecording">Cancelar</button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="error-text" style="color: #fca5a5; font-size: 0.875rem; margin-top: 0.5rem;">
+            @errorMessage
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<AudioCapturedEventArgs> OnAudioCaptured { get; set; }
+
+    private bool isRecording = false;
+    private bool isUploading = false;
+    private int elapsedSeconds = 0;
+    private System.Threading.Timer? timer;
+    private string? errorMessage;
+
+    private async Task ToggleRecording()
+    {
+        errorMessage = null;
+
+        if (isRecording)
+        {
+            await StopAndSendRecording();
+        }
+        else
+        {
+            await StartRecording();
+        }
+    }
+
+    private async Task StartRecording()
+    {
+        var started = await JSRuntime.InvokeAsync<bool>("brainDumpAudioRecorder.startRecording");
+        if (started)
+        {
+            isRecording = true;
+            elapsedSeconds = 0;
+            timer = new System.Threading.Timer(_ =>
+            {
+                elapsedSeconds++;
+                InvokeAsync(StateHasChanged);
+            }, null, 1000, 1000);
+        }
+        else
+        {
+            errorMessage = "Não foi possível acessar o microfone. Verifique as permissões.";
+        }
+    }
+
+    private async Task StopAndSendRecording()
+    {
+        StopTimer();
+        isRecording = false;
+        isUploading = true;
+        StateHasChanged();
+
+        try
+        {
+            var result = await JSRuntime.InvokeAsync<RecordedAudioData?>("brainDumpAudioRecorder.stopRecording");
+            if (result != null && result.Data != null && result.Data.Length > 0)
+            {
+                await OnAudioCaptured.InvokeAsync(new AudioCapturedEventArgs(
+                    result.Data,
+                    result.ContentType ?? "audio/webm",
+                    elapsedSeconds,
+                    result.Size));
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao finalizar gravação: " + ex.Message;
+        }
+        finally
+        {
+            isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task CancelRecording()
+    {
+        StopTimer();
+        isRecording = false;
+        await JSRuntime.InvokeVoidAsync("brainDumpAudioRecorder.cancelRecording");
+        StateHasChanged();
+    }
+
+    private void StopTimer()
+    {
+        timer?.Dispose();
+        timer = null;
+    }
+
+    private string FormatTimer(int seconds)
+    {
+        var ts = TimeSpan.FromSeconds(seconds);
+        return $"{ts.Minutes:D2}:{ts.Seconds:D2}";
+    }
+
+    public record RecordedAudioData(byte[] Data, string ContentType, long Size);
+    public record AudioCapturedEventArgs(byte[] AudioBytes, string ContentType, int DurationSeconds, long ByteSize);
+}

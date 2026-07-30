@@ -50,11 +50,22 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapeamento dos endpoints de autenticação
+
+// Mapeamento dos endpoints
 app.MapAuthEndpoints();
+app.MapVoiceEndpoints();
+app.MapReviewEndpoints();
+app.MapTaskEndpoints();
 
 app.Run();
+
+
+

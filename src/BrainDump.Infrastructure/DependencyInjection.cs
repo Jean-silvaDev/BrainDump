@@ -39,9 +39,35 @@ public static class DependencyInjection
 
         // Injeção de dependências das implementações
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<BrainDump.Domain.Repositories.IVoiceEntryRepository, VoiceEntryRepository>();
+        services.AddScoped<BrainDump.Domain.Repositories.IParsedTaskItemRepository, ParsedTaskItemRepository>();
+        services.AddScoped<BrainDump.Domain.Repositories.ITaskItemRepository, TaskItemRepository>();
+        services.AddSingleton<IAudioStorageService, Storage.LocalAudioStorageService>();
+
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+
+        // Serviços de IA (STT e LLM) com suporte a Mock ou OpenAI via configuração
+        var aiProvider = configuration["AiProvider"] ?? "Mock";
+        services.AddHttpClient();
+
+        if (aiProvider.Equals("OpenAI", StringComparison.OrdinalIgnoreCase))
+        {
+            services.AddScoped<ITranscriptionService, AI.OpenAiTranscriptionService>();
+            services.AddScoped<IItemClassifierService, AI.OpenAiItemClassifierService>();
+        }
+        else
+        {
+            services.AddScoped<ITranscriptionService, AI.MockTranscriptionService>();
+            services.AddScoped<IItemClassifierService, AI.MockItemClassifierService>();
+        }
+
+        // Fila e Serviço em Segundo Plano (BackgroundService)
+        services.AddSingleton<BackgroundServices.VoiceProcessingQueue>();
+        services.AddHostedService<BackgroundServices.VoiceProcessingBackgroundService>();
 
         return services;
     }
 }
+
+
